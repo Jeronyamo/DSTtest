@@ -1,0 +1,7 @@
+# ninja log v5
+24	469	6693241127146414	CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.obj	49708597f00689c5
+6	551	6693241127956409	CMakeFiles/hydra.dir/Bitmap.cpp.obj	a70c3fea076f41db
+16	680	6693241129226441	CMakeFiles/hydra.dir/C_/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.obj	f165063bc14eab32
+19	694	6693241129376412	CMakeFiles/hydra.dir/C_/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.obj	333258d52dc8b922
+21	727	6693241129706441	CMakeFiles/hydra.dir/C_/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.obj	ab6b00ca1fa711c5
+13	1037	6693241132826422	CMakeFiles/hydra.dir/C_/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.obj	60948ffe48814df7
