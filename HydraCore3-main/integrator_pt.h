@@ -34,9 +34,9 @@ public:
   virtual int LoadScene(const char* bvhPath);
 
   void PackXY         (uint tidX, uint tidY);
-  void CastSingleRay  (uint tid, uint* out_color                    __attribute__((size("tid"))) );
-  void NaivePathTrace (uint tid, uint a_maxDepth, float4* out_color __attribute__((size("tid"))) );
-  void PathTrace      (uint tid, uint a_maxDepth, float4* out_color __attribute__((size("tid"))) );
+  void CastSingleRay  (uint tid, uint* out_color                   );
+  void NaivePathTrace (uint tid, uint a_maxDepth, float4* out_color);
+  void PathTrace      (uint tid, uint a_maxDepth, float4* out_color);
 
   virtual void PackXYBlock(uint tidX, uint tidY, uint a_passNum);
   virtual void CastSingleRayBlock(uint tid, uint* out_color, uint a_passNum);

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+#include <cfloat>
 
 void Integrator::InitRandomGens(int a_maxThreads)
 {
@@ -29,7 +30,7 @@ void Integrator::kernel_InitEyeRay(uint tid, const uint* packedXY, float4* rayPo
                   &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
 }
 
 void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY, 
@@ -57,7 +58,7 @@ void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY,
   transform_ray3f(m_worldViewInv, &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
   *gen           = genLocal;
 }
 
@@ -154,10 +155,10 @@ void Integrator::kernel_RealColorToUint32(uint tid, float4* a_accumColor, uint* 
 
 void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint* in_pakedXY, uint* out_color)
 { 
-    std::cout << "TRY1 " << tid << std::endl;
+  std::cout << "TRY1 " << tid << std::endl;
   const Lite_Hit lhit = *in_hit;
-  std::cout << "TRY2" << tid << std::endl;
-  if(lhit.geomId == -1)
+  std::cout << "TRY2 " << tid << std::endl;
+  if(lhit.geomId < 0)
   {
     out_color[tid] = 0;
     return;
@@ -172,7 +173,7 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
   const uint y  = (XY & 0xFFFF0000) >> 16;
 
   out_color[y*m_winWidth+x] = RealColorToUint32_f3(color);
-  std::cout << "TRY3" << tid << std::endl;
+  std::cout << "TRY3 " << tid << std::endl;
 }
 
 
@@ -323,7 +324,7 @@ void Integrator::kernel_NextBounce(uint tid, uint bounce, const float4* in_hitPa
   }
 
   *rayPosAndNear = to_float4(OffsRayPos(hit.pos, hit.norm, matSam.direction), 0.0f);
-  *rayDirAndFar  = to_float4(matSam.direction, MAXFLOAT);
+  *rayDirAndFar  = to_float4(matSam.direction, FLT_MAX);
   *rayFlags      = currRayFlags | matSam.flags;
 }
 

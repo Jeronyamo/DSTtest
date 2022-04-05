@@ -138,14 +138,11 @@ std::shared_ptr<ITexture2DCombined> LoadTextureAndMakeCombined(const TextureInfo
   std::shared_ptr<ITexture2DCombined> pResult = nullptr;
   int wh[2] = {0,0};
   
-  #ifdef WIN32
-  std::ifstream fin(a_texInfo.path.c_str(), std::ios::binary);
-  #else
+
   std::string   fnameA(a_texInfo.path.begin(), a_texInfo.path.end());
   std::ifstream fin(fnameA.c_str(), std::ios::binary);
   if(!fin.is_open())
     std::cout << "[LoadTextureAndMakeCombined]: can't open '" << fnameA << "'" << std::endl;
-  #endif
 
   fin.read((char*)wh, sizeof(int)*2);
   if(a_texInfo.bpp == 16)
