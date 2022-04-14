@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ clean: CMakeFiles/hydra.dir/clean
 CMakeFiles/hydra.dir/all:
 	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/depend
 	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target hydra"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target hydra"
 .PHONY : CMakeFiles/hydra.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/hydra.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles 11
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/hydra.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles 0
 .PHONY : CMakeFiles/hydra.dir/rule
 
 # Convenience name for target.

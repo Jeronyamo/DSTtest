@@ -50,11 +50,12 @@ add_executable(hydra main.cpp
                      ../loader_utils/pugixml.cpp
                      ../loader_utils/hydraxml.cpp
                      #../loader_utils/scene_mgr.cpp
-                     #../RayTracing/EmbreeRT.cpp
                      ../geo_utils/cmesh.cpp
-                     addsrc/DSTree/dstree.cpp)
+                     addsrc/DSTree/dstree.cpp
+                     #../RayTracing/EmbreeRT.cpp #comment either this or dstree.cpp
+                     )
 
 set_target_properties(hydra PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-target_link_libraries(hydra LINK_PUBLIC  OpenMP::OpenMP_CXX  dl    # ${FREEIMAGE_LIBRARIES}
-                      embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tasking # embree shit
+target_link_libraries(hydra LINK_PUBLIC  OpenMP::OpenMP_CXX  #dl     ${FREEIMAGE_LIBRARIES}
+                      #embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tbb # embree
                       ) 

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -285,113 +285,113 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.o: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.o: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.o
-
-# target to build an object file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o
-
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.i: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i
-
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.i
-
-# target to preprocess a source file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i
-
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.s: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s
-
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.s
-
-# target to generate assembly for a file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s
-
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.o: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o
-
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.o
 
 # target to build an object file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.i: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.i: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.i
 
 # target to preprocess a source file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.s: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.s: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.s
 
 # target to generate assembly for a file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.o: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.o: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.o
 
 # target to build an object file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.i: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.i: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.i
 
 # target to preprocess a source file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.s: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.s: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.s
 
 # target to generate assembly for a file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.o: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.o: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.o
 
 # target to build an object file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.i: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.i: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.i
 
 # target to preprocess a source file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i
 
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.s: mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.s: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s
 
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.s
 
 # target to generate assembly for a file
-mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s
-.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s
+
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.o: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o
+
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.o
+
+# target to build an object file
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o
+
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.i: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i
+
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.i
+
+# target to preprocess a source file
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i
+
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.s: mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s
+
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.s
+
+# target to generate assembly for a file
+mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s
+.PHONY : mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s
 
 # Help Target
 help:
@@ -420,18 +420,18 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.o"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.i"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.s"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.o"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.i"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.s"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.o"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.i"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.s"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.o"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.i"
-	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.s"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.o"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.i"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.s"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.o"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.i"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.s"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.o"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.i"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.s"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.o"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.i"
+	@echo "... mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.s"
 .PHONY : help
 
 

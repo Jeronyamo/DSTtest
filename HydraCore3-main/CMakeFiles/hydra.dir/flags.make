@@ -6,5 +6,5 @@ CXX_FLAGS =  -fopenmp -mavx2 -fPIC   -fopenmp -std=gnu++17
 
 CXX_DEFINES = -D_CRT_SECURE_NO_WARNINGS
 
-CXX_INCLUDES = -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/. -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/../LiteMath -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/../loader_utils -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/../geo_utils -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/../RayTracing -I/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/../utils 
+CXX_INCLUDES = -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/. -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/../LiteMath -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/../loader_utils -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/../geo_utils -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/../RayTracing -I/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/../utils 
 

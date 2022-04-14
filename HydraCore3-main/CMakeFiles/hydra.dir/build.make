@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_SOURCE_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main
+CMAKE_BINARY_DIR = /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main
 
 # Include any dependencies generated for this target.
 include CMakeFiles/hydra.dir/depend.make
@@ -59,133 +59,133 @@ include CMakeFiles/hydra.dir/flags.make
 
 CMakeFiles/hydra.dir/main.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/main.cpp.o: main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hydra.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/main.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hydra.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/main.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/main.cpp
 
 CMakeFiles/hydra.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/main.cpp > CMakeFiles/hydra.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/main.cpp > CMakeFiles/hydra.dir/main.cpp.i
 
 CMakeFiles/hydra.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/main.cpp -o CMakeFiles/hydra.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/main.cpp -o CMakeFiles/hydra.dir/main.cpp.s
 
 CMakeFiles/hydra.dir/integrator_pt1.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/integrator_pt1.cpp.o: integrator_pt1.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hydra.dir/integrator_pt1.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt1.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hydra.dir/integrator_pt1.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt1.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt1.cpp
 
 CMakeFiles/hydra.dir/integrator_pt1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/integrator_pt1.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt1.cpp > CMakeFiles/hydra.dir/integrator_pt1.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt1.cpp > CMakeFiles/hydra.dir/integrator_pt1.cpp.i
 
 CMakeFiles/hydra.dir/integrator_pt1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/integrator_pt1.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt1.cpp -o CMakeFiles/hydra.dir/integrator_pt1.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt1.cpp -o CMakeFiles/hydra.dir/integrator_pt1.cpp.s
 
 CMakeFiles/hydra.dir/integrator_pt2.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/integrator_pt2.cpp.o: integrator_pt2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hydra.dir/integrator_pt2.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt2.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt2.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hydra.dir/integrator_pt2.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt2.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt2.cpp
 
 CMakeFiles/hydra.dir/integrator_pt2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/integrator_pt2.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt2.cpp > CMakeFiles/hydra.dir/integrator_pt2.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt2.cpp > CMakeFiles/hydra.dir/integrator_pt2.cpp.i
 
 CMakeFiles/hydra.dir/integrator_pt2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/integrator_pt2.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt2.cpp -o CMakeFiles/hydra.dir/integrator_pt2.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt2.cpp -o CMakeFiles/hydra.dir/integrator_pt2.cpp.s
 
 CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o: integrator_pt_scene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt_scene.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt_scene.cpp
 
 CMakeFiles/hydra.dir/integrator_pt_scene.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/integrator_pt_scene.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt_scene.cpp > CMakeFiles/hydra.dir/integrator_pt_scene.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt_scene.cpp > CMakeFiles/hydra.dir/integrator_pt_scene.cpp.i
 
 CMakeFiles/hydra.dir/integrator_pt_scene.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/integrator_pt_scene.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/integrator_pt_scene.cpp -o CMakeFiles/hydra.dir/integrator_pt_scene.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/integrator_pt_scene.cpp -o CMakeFiles/hydra.dir/integrator_pt_scene.cpp.s
 
 CMakeFiles/hydra.dir/Bitmap.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/Bitmap.cpp.o: Bitmap.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/hydra.dir/Bitmap.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/Bitmap.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/Bitmap.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/hydra.dir/Bitmap.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/Bitmap.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/Bitmap.cpp
 
 CMakeFiles/hydra.dir/Bitmap.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/Bitmap.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/Bitmap.cpp > CMakeFiles/hydra.dir/Bitmap.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/Bitmap.cpp > CMakeFiles/hydra.dir/Bitmap.cpp.i
 
 CMakeFiles/hydra.dir/Bitmap.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/Bitmap.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/Bitmap.cpp -o CMakeFiles/hydra.dir/Bitmap.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/Bitmap.cpp -o CMakeFiles/hydra.dir/Bitmap.cpp.s
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o: CMakeFiles/hydra.dir/flags.make
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o: CMakeFiles/hydra.dir/flags.make
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.i
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.i
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.s
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.s
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o: CMakeFiles/hydra.dir/flags.make
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o: CMakeFiles/hydra.dir/flags.make
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.i
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.i
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.s
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.s
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o: CMakeFiles/hydra.dir/flags.make
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o: CMakeFiles/hydra.dir/flags.make
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.i
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.i
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.s
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.s
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o: CMakeFiles/hydra.dir/flags.make
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o: CMakeFiles/hydra.dir/flags.make
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o: /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.i
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp > CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.i
 
-CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.s
+CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp -o CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.s
 
 CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o: CMakeFiles/hydra.dir/flags.make
 CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o: addsrc/DSTree/dstree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/addsrc/DSTree/dstree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o -c /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/addsrc/DSTree/dstree.cpp
 
 CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/addsrc/DSTree/dstree.cpp > CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/addsrc/DSTree/dstree.cpp > CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.i
 
 CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/addsrc/DSTree/dstree.cpp -o CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/addsrc/DSTree/dstree.cpp -o CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.s
 
 # Object files for target hydra
 hydra_OBJECTS = \
@@ -194,10 +194,10 @@ hydra_OBJECTS = \
 "CMakeFiles/hydra.dir/integrator_pt2.cpp.o" \
 "CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o" \
 "CMakeFiles/hydra.dir/Bitmap.cpp.o" \
-"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o" \
-"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o" \
-"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o" \
-"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o" \
+"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o" \
+"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o" \
+"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o" \
+"CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o" \
 "CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o"
 
 # External object files for target hydra
@@ -208,16 +208,16 @@ hydra: CMakeFiles/hydra.dir/integrator_pt1.cpp.o
 hydra: CMakeFiles/hydra.dir/integrator_pt2.cpp.o
 hydra: CMakeFiles/hydra.dir/integrator_pt_scene.cpp.o
 hydra: CMakeFiles/hydra.dir/Bitmap.cpp.o
-hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/LiteMath/texture2d.cpp.o
-hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/pugixml.cpp.o
-hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/loader_utils/hydraxml.cpp.o
-hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/geo_utils/cmesh.cpp.o
+hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/LiteMath/texture2d.cpp.o
+hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/pugixml.cpp.o
+hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/loader_utils/hydraxml.cpp.o
+hydra: CMakeFiles/hydra.dir/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/geo_utils/cmesh.cpp.o
 hydra: CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o
 hydra: CMakeFiles/hydra.dir/build.make
 hydra: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
 hydra: /usr/lib/x86_64-linux-gnu/libpthread.so
 hydra: CMakeFiles/hydra.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable hydra"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable hydra"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hydra.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -230,6 +230,6 @@ CMakeFiles/hydra.dir/clean:
 .PHONY : CMakeFiles/hydra.dir/clean
 
 CMakeFiles/hydra.dir/depend:
-	cd /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/Hydra/HydraCore3-main/CMakeFiles/hydra.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main /mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles/hydra.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/hydra.dir/depend
 

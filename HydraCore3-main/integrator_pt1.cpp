@@ -29,7 +29,7 @@ void Integrator::kernel_InitEyeRay(uint tid, const uint* packedXY, float4* rayPo
                   &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
 }
 
 void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY, 
@@ -57,7 +57,7 @@ void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY,
   transform_ray3f(m_worldViewInv, &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
   *gen           = genLocal;
 }
 
@@ -69,7 +69,6 @@ bool Integrator::kernel_RayTrace(uint tid, const float4* rayPosAndNear, float4* 
   const float4 rayDir = *rayDirAndFar ;
 
   CRT_Hit hit = m_pAccelStruct->RayQuery_NearestHit(rayPos, rayDir);
-  
   Lite_Hit res;
   res.primId = hit.primId;
   res.instId = hit.instId;
@@ -154,9 +153,7 @@ void Integrator::kernel_RealColorToUint32(uint tid, float4* a_accumColor, uint* 
 
 void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint* in_pakedXY, uint* out_color)
 { 
-    std::cout << "TRY1 " << tid << std::endl;
   const Lite_Hit lhit = *in_hit;
-  std::cout << "TRY2" << tid << std::endl;
   if(lhit.geomId == -1)
   {
     out_color[tid] = 0;
@@ -165,14 +162,18 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
 
   const uint32_t matId = m_matIdByPrimId[m_matIdOffsets[lhit.geomId] + lhit.primId];
   const float4 mdata   = m_materials[matId].baseColor;
-  const float3 color   = mdata.w > 0.0f ? clamp(float3(mdata.w,mdata.w,mdata.w), 0.0f, 1.0f) : to_float3(mdata);
+  //const float3 color = mdata.w > 0.0f ? clamp(float3(mdata.w, mdata.w, mdata.w), 0.0f, 1.0f) : to_float3(mdata);
+  float3 temp_color = mdata.w > 0.0f ? clamp(float3(mdata.w,mdata.w,mdata.w), 0.0f, 1.0f) : to_float3(mdata);
+  if (lhit.instId == 1 && lhit.primId == 8)
+      temp_color = float3(0.f, 0.f, 1.f);
+  const float3 color = temp_color;
+  //
 
   const uint XY = in_pakedXY[tid];
   const uint x  = (XY & 0x0000FFFF);
   const uint y  = (XY & 0xFFFF0000) >> 16;
 
   out_color[y*m_winWidth+x] = RealColorToUint32_f3(color);
-  std::cout << "TRY3" << tid << std::endl;
 }
 
 
@@ -323,7 +324,7 @@ void Integrator::kernel_NextBounce(uint tid, uint bounce, const float4* in_hitPa
   }
 
   *rayPosAndNear = to_float4(OffsRayPos(hit.pos, hit.norm, matSam.direction), 0.0f);
-  *rayDirAndFar  = to_float4(matSam.direction, MAXFLOAT);
+  *rayDirAndFar  = to_float4(matSam.direction, FLT_MAX);
   *rayFlags      = currRayFlags | matSam.flags;
 }
 
@@ -354,7 +355,9 @@ void Integrator::CastSingleRay(uint tid, uint* out_color)
   float2   baricentrics; 
   if(!kernel_RayTrace(tid, &rayPosAndNear, &rayDirAndFar, &hit, &baricentrics))
     return;
-  
+ // if (hit.instId == 1 && hit.primId == 8) {
+ //     std::cout << tid << std::endl;
+ // }
   kernel_GetRayColor(tid, &hit, m_packedXY.data(), out_color);
 }
 

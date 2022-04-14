@@ -4,7 +4,6 @@
 #include "integrator_pt.h"
 #include "Bitmap.h"
 #include "ArgParser.h"
-#include "addsrc/DSTree/dstree.h"
 
 //#include "vk_context.h"
 //std::shared_ptr<Integrator> CreateIntegrator_Generated(int a_maxThreads, vk_utils::VulkanContext a_ctx, size_t a_maxThreadsGenerated);
@@ -17,8 +16,8 @@ int main(int argc, const char** argv)
   bool enableValidationLayers = false;
   #endif
 
-  int WIN_WIDTH  = 64;
-  int WIN_HEIGHT = 64;
+  int WIN_WIDTH  = 128;
+  int WIN_HEIGHT = 128;
 
   std::vector<uint32_t> pixelData(WIN_WIDTH*WIN_HEIGHT);
   std::vector<float4>   realColor(WIN_WIDTH*WIN_HEIGHT);
@@ -69,8 +68,8 @@ int main(int argc, const char** argv)
   // remember (x,y) coords for each thread to make our threading 1D
   //
 
-  DSTree* treePtr = dynamic_cast<DSTree*>(pImpl->m_pAccelStruct.get());
-  std::cout << "[main]: PackXYBlock() ... " << treePtr->getIndices().size() << std::endl;
+  ISceneObject* treePtr = dynamic_cast<ISceneObject*>(pImpl->m_pAccelStruct.get());
+  std::cout << "[main]: PackXYBlock() ... " << std::endl;
   pImpl->PackXYBlock(WIN_WIDTH, WIN_HEIGHT, 1);
 
   const float normConst = 1.0f/float(PASS_NUMBER);

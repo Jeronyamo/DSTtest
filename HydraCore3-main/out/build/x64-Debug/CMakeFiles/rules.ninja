@@ -47,7 +47,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\Blueberry_iScream\source\repos\Hydra\HydraCore3-main -BC:\Users\Blueberry_iScream\source\repos\Hydra\HydraCore3-main\out\build\x64-Debug
+  command = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\Blueberry_iScream\source\repos\DSTtest\HydraCore3-main -BC:\Users\Blueberry_iScream\source\repos\DSTtest\HydraCore3-main\out\build\x64-Debug
   description = Re-running CMake...
   generator = 1
 

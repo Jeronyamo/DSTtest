@@ -2,6 +2,11 @@
 
 #include "dst.h"
 #include "../../../RayTracing/CrossRT.h"
+//#include "../AddHeaders/CrossRT.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+
 
 struct simpleAABB {
 	LiteMath::float3 min;
@@ -9,37 +14,53 @@ struct simpleAABB {
 
 	simpleAABB() : min(), max() {}
 	simpleAABB(const LiteMath::float3& new_min, const LiteMath::float3& new_max) : min(new_min), max(new_max) {}
-}; 
+};
+
+struct simpleInstance {
+	uint32_t geomID;
+	uint32_t firstInstID;
+	uint32_t lastInstID;
+	LiteMath::float4x4 transf;
+};
+
+struct simpleMeshInfo {
+	uint32_t firstVertID;
+	uint32_t lastVertID;
+	uint32_t firstIndID;
+	uint32_t lastIndID;
+};
 
 
 class DSTree : public ISceneObject {
 	std::vector <LiteMath::float4> vertices;
 	std::vector <unsigned> indices;
 	std::vector <unsigned> instances;
-	std::vector <float> transform_mat;
-	LiteMath::float4x4 invMVP;
-	LiteMath::float3 camPos;
-
+	std::vector <simpleInstance> instances_info;
+	std::vector <simpleMeshInfo> meshes;
 	DST dst_nodes;
+	size_t instances_size;
+	size_t instances_info_size;
 
 
 /* ================  Functions  ================ */
 	friend float getMinPos(const void* index);
 	friend float getMaxPos(const void* index);
   /* ========  SAH calculation  ======== */
-	const unsigned DSTREE_MAX_POLY = 16u;
+	const unsigned DSTREE_MAX_POLY = 8u;
 	const float EMPTY_COST = 3e3f;
 	const float SAH_MAX = 10e10f;
 	unsigned current_scene_axis = 3u;
 
-	float sceneAABB_arr[6u];
+	//float sceneAABB_arr[6u];
 	simpleAABB scene_AABB;
-	simpleAABB getAABB(unsigned index, unsigned * instances_ptr);
-	simpleAABB mergeAABB(unsigned index, simpleAABB aabb, unsigned* instances_ptr);
+	simpleAABB getAABB(unsigned index);
+	simpleAABB mergeAABB(unsigned index, simpleAABB aabb);
 
-	LiteMath::float4x4 getTransformMatrix(unsigned index) { return LiteMath::float4x4(&(transform_mat[index << 4])); }
-	unsigned findSameMatrix(const LiteMath::float4x4& a_matrix);
-	LiteMath::float3 getVertex(unsigned instance_ind, unsigned* instances_ptr, unsigned geom_vert_ind);
+	uint32_t getTrIndex(uint32_t instTrIndex);
+	uint32_t getInstID(uint32_t instTrIndex);
+	LiteMath::float3& getVertex(unsigned instance_ind, unsigned* instances_ptr, unsigned geom_vert_ind);
+	LiteMath::float3x3& getTrVertices(unsigned instTrIndex);
+	LiteMath::float3& getTrVerticesAxis(unsigned instTrIndex);
 
 
 	float calcSurf(const simpleAABB& aabb) { return 2.0f * ((aabb.max.x - aabb.min.x) +
@@ -47,10 +68,6 @@ class DSTree : public ISceneObject {
 															(aabb.max.z - aabb.min.z));
 	}
 
-	//float getMinPos(const void* index);
-	//float getMaxPos(const void* index);
-	//int cmpMinPos(const void* ind1, const void* ind2); //Check if this works with qsort()
-	//int cmpMaxPos(const void* ind1, const void* ind2); //Check if this works with qsort()
 	float calculateSAH(unsigned& new_axis, unsigned& new_index, unsigned *instances_ptr,
 					   simpleAABB& parentAABB, simpleAABB& leftAABB, simpleAABB& rightAABB,
 					   unsigned elem_count, float parentSAH);
@@ -66,8 +83,8 @@ class DSTree : public ISceneObject {
 
 
   /* ========  Ray traverse  ======== */
-	enum BoolParams { CHECK_LEAF_POLY, IS_CARVING_NODE, IS_DOUBLE_CARVE };
-
+	//enum BoolParams { CHECK_LEAF_POLY, IS_CARVING_NODE, IS_DOUBLE_CARVE };
+	/*
 	struct bool2 {
 		bool x = false, y = false;
 
@@ -89,19 +106,18 @@ class DSTree : public ISceneObject {
 
 		bool& operator[](const unsigned& ind) { if (ind > 1u) return z; if (ind) return y; return x; }
 	};
-
+*/
 	bool traceAABB(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float3 InvDir);
 	CRT_Hit traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, unsigned trIndex);
 	CRT_Hit findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny);
 
 public:
-	void setVertices(const std::vector <LiteMath::float4>& new_vertices) { vertices = new_vertices; }
-	void setIndices(const std::vector <unsigned>& new_indices) { indices = new_indices; }
-	std::vector <unsigned>& getIndices() { return indices; }
-	void setMVPinv(const LiteMath::float4x4& new_invMVP) { invMVP = new_invMVP; }
-	float* getSceneAABB();
-	std::vector <DSNode>& getDSTNodes() { return dst_nodes.nodes; }
-	//void setCamPos(const LiteMath::float3& new_camPos) { camPos = new_camPos; }
+	//void setVertices(const std::vector <LiteMath::float4>& new_vertices) { vertices = new_vertices; }
+	//void setIndices(const std::vector <unsigned>& new_indices) { indices = new_indices; }
+	//std::vector <unsigned>& getIndices() { return indices; }
+	//float* getSceneAABB();
+	//std::vector <DSNode>& getDSTNodes() { return dst_nodes.nodes; }
+
 
 	unsigned AddGeom_Triangles4f(const LiteMath::float4* a_vpos4f, size_t a_vertNumber, const unsigned* a_triIndices, size_t a_indNumber);
 	void UpdateGeom_Triangles4f(unsigned a_geomId, const LiteMath::float4* a_vpos4f, size_t a_vertNumber, const unsigned* a_triIndices, size_t a_indNumber);
@@ -109,8 +125,8 @@ public:
 	CRT_Hit RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar);
 	bool RayQuery_AnyHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar);
 
-	unsigned AddInstance(unsigned a_geomId, const LiteMath::float4x4& a_matrix);
-	void UpdateInstance(unsigned a_instanceId, const LiteMath::float4x4& a_matrix);
+	uint32_t AddInstance(uint32_t a_geomId, const LiteMath::float4x4& a_matrix);
+	void UpdateInstance(uint32_t a_instanceId, const LiteMath::float4x4& a_matrix);
 	void ClearGeom();
 	void ClearScene();
 	void CommitScene();
