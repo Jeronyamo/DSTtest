@@ -41,6 +41,12 @@ unsigned DSTree::AddGeom_Triangles4f(const LiteMath::float4* a_vpos4f, size_t a_
 			tempAABB = mergeAABB(j, tempAABB);
 		}
 		tempInfo.meshAABB = tempAABB;
+		for (int i = 0; i < 3; ++i) {
+			if (tempInfo.meshAABB.min[i] == tempInfo.meshAABB.max[i]) {
+				tempInfo.meshAABB.min[i] -= AABBeps;
+				tempInfo.meshAABB.max[i] += AABBeps;
+			}
+		}
 	}
 	if (a_vertNumber) {
 		tempInfo.firstVertID = vertices.size();
@@ -617,7 +623,6 @@ bool DSTree::traceAABB(const simpleAABB &tempAABB, LiteMath::float3 Position, Li
 
 			continue;
 		}
-
 		float t1 = (Min[dim] - Position[dim]) * InvDir[dim];
 		float t2 = (Max[dim] - Position[dim]) * InvDir[dim];
 
@@ -685,9 +690,9 @@ CRT_Hit DSTree::RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float
 	std::vector <uint32_t> insts;
 	if (fabs(dirAndFar.x + 0.346856236) < 1e-4)
 		int u = 0;
-	//findInstHit(posAndNear, dirAndFar, insts);
-	for (uint32_t i = 0u; i < instances_info.size(); ++i)
-		insts.push_back(i);
+	findInstHit(posAndNear, dirAndFar, insts);
+	//for (uint32_t i = 0u; i < instances_info.size(); ++i)
+	//	insts.push_back(i);
 
 	CRT_Hit temp_hit;
 	temp_hit.t = FLT_MAX;
@@ -810,11 +815,6 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 
 CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance) {
 	simpleInstance tempInst = instances_info[current_instance];
-	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
-	LiteMath::float4* tempVertices = &(vertices[tempMesh.firstVertID]);
-	unsigned* tempIndices = &(indices[3 * tempMesh.firstIndID]);
-	unsigned* tempIndicesSorted = &(indices_sorted[tempMesh.firstIndID]);
-	DSNode* dst_ptr = &(lower_tree[tempMesh.DSTreeOffset]);
 
 	LiteMath::float3 position  = LiteMath::inverse4x4(tempInst.transf) * LiteMath::float3(posAndNear.x, posAndNear.y, posAndNear.z);
 	LiteMath::float4 temp_direction = LiteMath::mul4x4x4(LiteMath::inverse4x4(tempInst.transf), LiteMath::float4( dirAndFar.x,  dirAndFar.y,  dirAndFar.z, 0.f));
@@ -829,6 +829,12 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 	temp_hit.instId = -1;
 
 	if (!traceAABB(meshes[instances_info[current_instance].geomID].meshAABB, position, direction, invDir, tMinMax)) return temp_hit;
+
+	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
+	LiteMath::float4* tempVertices = &(vertices[tempMesh.firstVertID]);
+	unsigned* tempIndices = &(indices[3 * tempMesh.firstIndID]);
+	unsigned* tempIndicesSorted = &(indices_sorted[tempMesh.firstIndID]);
+	DSNode* dst_ptr = &(lower_tree[tempMesh.DSTreeOffset]);
 
 	unsigned node = 0u;
 	bool isFin[3] = { std::isfinite(invDir.x), std::isfinite(invDir.y), std::isfinite(invDir.z) };

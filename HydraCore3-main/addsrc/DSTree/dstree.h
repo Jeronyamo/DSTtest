@@ -36,6 +36,7 @@ struct simpleMeshInfo {
 
 
 class DSTree : public ISceneObject {
+	const float AABBeps = 1e-4f;
 	std::vector <LiteMath::float4> vertices;
 	std::vector <unsigned> indices;
 	std::vector <unsigned> indices_sorted;
