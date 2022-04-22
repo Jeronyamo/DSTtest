@@ -190,7 +190,7 @@ BsdfEval Integrator::MaterialEval(int a_materialId, float3 l, float3 v, float3 n
 
 void Integrator::PackXYBlock(uint tidX, uint tidY, uint a_passNum)
 {
-  #pragma omp parallel for default(shared)
+  //#pragma omp parallel for default(shared)
   for(int y=0;y<tidY;y++)
     for(int x=0;x<tidX;x++)
       PackXY(x, y);

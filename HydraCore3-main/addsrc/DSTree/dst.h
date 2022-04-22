@@ -9,7 +9,7 @@ struct DSNode {
 	unsigned rightNode = 0u;
 	float    planes[2] = { 0.f, 0.f };
 };
-
+/*
 struct DSTNodeInfo {
 	unsigned trOffset;
 	unsigned length;
@@ -18,4 +18,4 @@ struct DSTNodeInfo {
 struct DST {
 	std::vector <DSNode> nodes;
 	std::vector <DSTNodeInfo> nodeTriangles;
-};
+};*/
