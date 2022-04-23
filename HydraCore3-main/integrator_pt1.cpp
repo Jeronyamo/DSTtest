@@ -153,6 +153,16 @@ void Integrator::kernel_RealColorToUint32(uint tid, float4* a_accumColor, uint* 
 
 void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint* in_pakedXY, uint* out_color)
 { 
+  static constexpr uint32_t PALETTE_SZ = 20;
+  static constexpr uint32_t PALETTE[PALETTE_SZ] = {
+  0xffe6194b, 0xff3cb44b, 0xffffe119, 0xff0082c8,
+  0xfff58231, 0xff911eb4, 0xff46f0f0, 0xfff032e6,
+  0xffd2f53c, 0xfffabebe, 0xff008080, 0xffe6beff,
+  0xffaa6e28, 0xfffffac8, 0xff800000, 0xffaaffc3,
+  0xff808000, 0xffffd8b1, 0xff000080, 0xff808080
+  };
+
+
   const Lite_Hit lhit = *in_hit;
   if(lhit.geomId == -1)
   {
@@ -164,16 +174,18 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
   const float4 mdata   = m_materials[matId].baseColor;
   //const float3 color = mdata.w > 0.0f ? clamp(float3(mdata.w, mdata.w, mdata.w), 0.0f, 1.0f) : to_float3(mdata);
   float3 temp_color = mdata.w > 0.0f ? clamp(float3(mdata.w,mdata.w,mdata.w), 0.0f, 1.0f) : to_float3(mdata);
+  uint32_t u_color = PALETTE[lhit.instId % PALETTE_SZ];
   if (lhit.instId == 1 && lhit.primId == 8)
-      temp_color = float3(0, 0, 1);
-  const float3 color = temp_color;
-  //
+  {
+    temp_color = float3(0, 0, 1);
+    u_color = RealColorToUint32_f3(temp_color);
+  }
 
   const uint XY = in_pakedXY[tid];
   const uint x  = (XY & 0x0000FFFF);
   const uint y  = (XY & 0xFFFF0000) >> 16;
 
-  out_color[y*m_winWidth+x] = RealColorToUint32_f3(color);
+  out_color[y*m_winWidth+x] = u_color;
 }
 
 
