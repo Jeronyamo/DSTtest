@@ -164,8 +164,8 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
   const float4 mdata   = m_materials[matId].baseColor;
   //const float3 color = mdata.w > 0.0f ? clamp(float3(mdata.w, mdata.w, mdata.w), 0.0f, 1.0f) : to_float3(mdata);
   float3 temp_color = mdata.w > 0.0f ? clamp(float3(mdata.w,mdata.w,mdata.w), 0.0f, 1.0f) : to_float3(mdata);
-  if (lhit.instId == 1 && lhit.primId == 8)
-      temp_color = float3(0, 0, 1);
+  //if (lhit.instId == 1 && lhit.primId == 8)
+      temp_color = float3(0.1f + 0.9f * (lhit.instId & 1), 0.1f + 0.9f * (lhit.instId & 2), 0.1f + 0.9f * (lhit.instId & 4));
   const float3 color = temp_color;
   //
 

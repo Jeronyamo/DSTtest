@@ -16,8 +16,8 @@ int main(int argc, const char** argv)
   bool enableValidationLayers = false;
   #endif
 
-  int WIN_WIDTH  = 128;
-  int WIN_HEIGHT = 128;
+  int WIN_WIDTH  = 1024;
+  int WIN_HEIGHT = 1024;
 
   std::vector<uint32_t> pixelData(WIN_WIDTH*WIN_HEIGHT);
   std::vector<float4>   realColor(WIN_WIDTH*WIN_HEIGHT);
@@ -28,7 +28,7 @@ int main(int argc, const char** argv)
   std::shared_ptr<Integrator> pImpl = nullptr;
   ArgParser args(argc, argv);
   
-  std::string scenePath = "../resources/HydraCore/hydra_app/tests/01_simple_scenes/bunny_plane.xml";
+  std::string scenePath = "../resources/HydraCore/hydra_app/tests/02_cry_sponza/statex_00001.xml";
   if(args.hasOption("-in"))
     scenePath = args.getOptionValue<std::string>("-in");
 
