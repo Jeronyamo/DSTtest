@@ -387,7 +387,11 @@ int Integrator::LoadScene(const char* scehePath)
   m_pAccelStruct->ClearScene();
   for(auto inst : scene.InstancesGeom())
   {
-     // inst.matrix.identity();
+      if (inst.geomId) {
+          inst.matrix[0][0] *= 1.05f;
+          inst.matrix[1][1] *= 1.05f;
+          inst.matrix[2][2] *= 1.05f;
+      }
     m_pAccelStruct->AddInstance(inst.geomId, inst.matrix);
     m_normMatrices.push_back(transpose(inverse4x4(inst.matrix)));
   }

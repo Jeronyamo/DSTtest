@@ -16,8 +16,8 @@ int main(int argc, const char** argv)
   bool enableValidationLayers = false;
   #endif
 
-  int WIN_WIDTH  = 1024;
-  int WIN_HEIGHT = 1024;
+  int WIN_WIDTH  = 512;
+  int WIN_HEIGHT = 512;
 
   std::vector<uint32_t> pixelData(WIN_WIDTH*WIN_HEIGHT);
   std::vector<float4>   realColor(WIN_WIDTH*WIN_HEIGHT);

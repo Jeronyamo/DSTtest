@@ -7,7 +7,16 @@
 #include <fstream>
 #include <iomanip>
 
-
+struct simpleDSTinfo {
+	bool is_leaf;
+	bool is_single_carve;
+	bool is_doulble_carve;
+	bool is_n1_pos;
+	bool is_n2_pos;
+	int plane1;
+	int plane2;
+};
+std::vector <simpleDSTinfo> carve_info;
 struct simpleAABB {
 	LiteMath::float3 min;
 	LiteMath::float3 max;

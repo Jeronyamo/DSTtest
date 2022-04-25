@@ -61,7 +61,7 @@ void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY,
   *gen           = genLocal;
 }
 
-
+uint* temp_out_color;
 bool Integrator::kernel_RayTrace(uint tid, const float4* rayPosAndNear, float4* rayDirAndFar,
                                 Lite_Hit* out_hit, float2* out_bars)
 {
@@ -76,7 +76,17 @@ bool Integrator::kernel_RayTrace(uint tid, const float4* rayPosAndNear, float4* 
   res.t      = hit.t;
 
   float2 baricentrics = float2(hit.coords[0], hit.coords[1]);
- 
+      
+      //13482, rayDir = {x=-0.271847814 y=0.271847814 z=-0.923145413 ...} 0.271847814 = 0.27184781400000002
+
+  //if (res.primId == -1 && (tid >= 13400 && tid <= 13600)) {
+      float3 color = 0.013f * float3(hit.coords[1], hit.coords[2], hit.coords[3]);
+      const uint XY = m_packedXY[tid];
+      const uint x = (XY & 0x0000FFFF);
+      const uint y = (XY & 0xFFFF0000) >> 16;
+
+      //temp_out_color[y * m_winWidth + x] = RealColorToUint32_f3(color);
+  //}
   *out_hit  = res;
   *out_bars = baricentrics;
   return (res.primId != -1);
@@ -173,7 +183,7 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
   const uint x  = (XY & 0x0000FFFF);
   const uint y  = (XY & 0xFFFF0000) >> 16;
 
-  out_color[y*m_winWidth+x] = RealColorToUint32_f3(color);
+  out_color[y*m_winWidth+x] += RealColorToUint32_f3(color);   ////////
 }
 
 
@@ -350,7 +360,7 @@ void Integrator::CastSingleRay(uint tid, uint* out_color)
 {
   float4 rayPosAndNear, rayDirAndFar;
   kernel_InitEyeRay(tid, m_packedXY.data(), &rayPosAndNear, &rayDirAndFar);
-
+  temp_out_color = out_color;
   Lite_Hit hit; 
   float2   baricentrics; 
   if(!kernel_RayTrace(tid, &rayPosAndNear, &rayDirAndFar, &hit, &baricentrics))
