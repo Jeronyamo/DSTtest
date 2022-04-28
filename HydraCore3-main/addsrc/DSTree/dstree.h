@@ -54,7 +54,6 @@ class DSTree : public ISceneObject {
 
 	std::vector <DSNode> upper_tree; //leaves contain instances' indices
 	std::vector <DSNode> lower_tree; //stores arrays of meshes' DST
-	//LOCAL LOCAL LOCAL
 	const LiteMath::float4* tempVertices; //temp pointer of vertices added in AddGeom_Triangles4f
 	const unsigned* tempIndices; //temp pointer of indices added in AddGeom_Triangles4f
 	const unsigned* tempIndicesSorted; //temp pointer of sorted indices added in AddGeom_Triangles4f => vertices[ 3 * indices[sorted_indices] + 0/1/2]
@@ -108,7 +107,6 @@ class DSTree : public ISceneObject {
 
 
   /* ========  Tree builder  ======== */
-	std::vector <unsigned> DSTree::TreePath(unsigned init, unsigned find);
 	unsigned buildHeader(bool is_leaf, bool is_carve, unsigned info);
 	bool sortTempPlanes(std::vector <unsigned>& target_plane_vec, const LiteMath::float3& minDif, const LiteMath::float3& maxDif,
 						float curr_difference, unsigned plane_info, bool dif_consition);
@@ -119,6 +117,7 @@ class DSTree : public ISceneObject {
 
 
   /* ========  Ray traverse  ======== */
+	std::vector <unsigned> DSTree::TreePath(unsigned init, unsigned find);	//finding the fastest way to a certain node
 	bool traceAABB(const simpleAABB& tempAABB, LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float3 InvDir, LiteMath::float2& tMinMax);
 	CRT_Hit traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float4* tempVertices, unsigned* tempInsices);
 	CRT_Hit findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance);

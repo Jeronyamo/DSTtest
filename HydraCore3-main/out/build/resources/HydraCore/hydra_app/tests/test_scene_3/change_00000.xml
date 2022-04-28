@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<textures_lib>
+  <texture id="0" name="Map#0" loc="data/chunk_00000.image4ub" offset="8" bytesize="16" width="2" height="2" dl="0" />
+</textures_lib>
+<materials_lib>
+  <material id="0" name="No material" type="hydra_material">
+    <diffuse>
+      <color val="0.5 0.5 0.5 1" />
+    </diffuse>
+  </material>
+  <material id="1" name="sky_material" type="hydra_material" light_id="0" visible="1">
+    <emission>
+      <color val="0.75 0.75 1" />
+    </emission>
+  </material>
+</materials_lib>
+<geometry_lib>
+  <mesh id="0" name="collapsed_mesh" type="vsgf" bytesize="235544" loc="data/chunk_00001.vsgf" offset="0" vertNum="3840" triNum="1280" dl="0" path="" bbox="-4.66528 4.66528 -4.66528 4.66528 -4.66528 4.66528">
+    <positions type="array4f" bytesize="61440" offset="24" apply="vertex" />
+    <normals type="array4f" bytesize="61440" offset="61464" apply="vertex" />
+    <tangents type="array4f" bytesize="61440" offset="122904" apply="vertex" />
+    <texcoords type="array2f" bytesize="30720" offset="184344" apply="vertex" />
+    <indices type="array1i" bytesize="15360" offset="215064" apply="tlist" />
+    <matindices type="array1i" bytesize="5120" offset="230424" apply="primitive" />
+  </mesh>
+</geometry_lib>
+<lights_lib>
+  <light id="0" name="sky" type="sky" shape="point" distribution="omni" visible="1" mat_id="1">
+    <intensity>
+      <color val="0.75 0.75 1" />
+      <multiplier val="1" />
+    </intensity>
+  </light>
+</lights_lib>
+<cam_lib>
+  <camera id="0" name="my camera" type="uvn">
+    <fov>45</fov>
+    <nearClipPlane>0.01</nearClipPlane>
+    <farClipPlane>100.0</farClipPlane>
+    <up>0 1 0</up>
+    <position>0 0 10</position>
+    <look_at>0 0 0</look_at>
+  </camera>
+</cam_lib>
+<render_lib />
+<scenes>
+  <scene id="0" name="exported_scene" discard="1" bbox="-4.66528 4.66528 -4.66528 4.66528 -4.66528 4.66528">
+    <instance id="0" mesh_id="0" rmap_id="-1" scn_id="0" scn_sid="0" matrix="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 " />
+    <instance_light id="0" light_id="0" matrix="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 " lgroup_id="-1" />
+  </scene>
+</scenes>
