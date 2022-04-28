@@ -1135,10 +1135,10 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 	unsigned tempMeshSize = lower_tree.size();
 	if (tempInst.geomID + 1 < meshes.size())
 		tempMeshSize = meshes[tempInst.geomID + 1].DSTreeOffset;
-	unsigned treeDepthMin = 1u, treeDepthMax = 10u; //root has depth == 1
+	unsigned treeDepthMin = 1u, treeDepthMax = 20u; //root has depth == 1
 	//float weight = 0.01f * (treeDepthMax - treeDepthMin + 2u) * lower_tree.size() / ((treeDepthMax + 1) * (1.f + ((tempMeshSize - tempMesh.DSTreeOffset))));
-	float weight = 0.1f * log10f(lower_tree.size()) * (treeDepthMax - treeDepthMin + 2u) / ((1.f + (tempMeshSize - tempMesh.DSTreeOffset)) * logf(treeDepthMax + 2.f));
-
+	//float weight = 100.f * log10f(lower_tree.size()) * (treeDepthMax - treeDepthMin + 2u) / ((1.f + (tempMeshSize - tempMesh.DSTreeOffset)) * logf(treeDepthMax + 2.f));
+	float weight = 0.001f;
 	LiteMath::float4* tempVertices = &(vertices[tempMesh.firstVertID]);
 	unsigned* tempIndices = &(indices[3 * tempMesh.firstIndID]);
 	unsigned* tempIndicesSorted = &(indices_sorted[tempMesh.firstIndID]);
@@ -1189,13 +1189,13 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 					if (isFin[planes.x]) t[0] = invDir[planes.x] * (curr_node.planes[0u] - position[planes.x]);
 					if (isFin[planes.y]) t[1] = invDir[planes.y] * (curr_node.planes[1u] - position[planes.y]);
-
+					/*
 					if (rightNodes.size() >= treeDepthMin && rightNodes.size() <= treeDepthMax) {
 						if (t[0] >= 0.f && t[0] <= tMinMax.y)
 							temp_hit.coords[3] += weight;
-						if (t[1] >= 0.f && t[0] <= tMinMax.y)
+						if (t[1] >= 0.f && t[1] <= tMinMax.y)
 							temp_hit.coords[2] += weight;
-					}
+					}*/
 					if (isFin[planes.x] && isFin[planes.y]) {
 						unsigned farChild = t[0] < t[1];
 						if (!IS_CARVING_NODE) {
@@ -1235,12 +1235,16 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 					}
 				//}
 				planeTrav[1] = !planeTrav[0] && planeTrav[1] && !IS_CARVING_NODE;
-				planeTrav[0] = true;
-				/*
+				//planeTrav[0] = true;
+				
 				if ((planeTrav[0] || planeTrav[1]) && (!CHECK_LEAF_POLY || IS_CARVING_NODE) && rightNodes.size() >= treeDepthMin && rightNodes.size() <= treeDepthMax) {
 					if (!IS_CARVING_NODE) temp_hit.coords[3] += weight;
 					if (IS_CARVING_NODE) temp_hit.coords[2] += weight;
-				}*/
+				}
+				//if (planeTrav[0])
+				//	temp_hit.coords[3] += weight;
+				//if (planeTrav[1])
+				//	temp_hit.coords[2] += weight;
 				if (planeTrav[1]) {
 					node = dst_ptr[curr_node.leftChild].rightNode;
 					rightNodes.push_back(rightNodes[rightNodes.size() - 1]);
