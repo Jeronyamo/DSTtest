@@ -649,10 +649,12 @@ void DSTree::dstBuilderRecur(unsigned first, unsigned last, float parentSAH) {
 			dst_nodes[curr_node_index].leftChild = (dst_nodes.size() << 6u) + buildHeader(false, false, new_axis);
 
 			unsigned temp1 = buildCarvingNodes(curr_aabb, left_aabb, new_axis, true, (new_index - first) < DSTREE_MAX_POLY, first);
-			if (!((new_index - first) < DSTREE_MAX_POLY && temp1))
+			if (!((dst_nodes[dst_nodes.size() - 1].leftChild & 1u) && temp1))
 				dstBuilderRecur(first, new_index, parentSAH);
 
 			for (unsigned temp_index = curr_node_index + 1u;;) {
+				if (dst_nodes[temp_index].rightNode)
+					std::cout << "WROMH ALGORITHMMMM" << std::endl;
 				dst_nodes[temp_index].rightNode = dst_nodes.size();
 				if (dst_nodes[temp_index].leftChild & 1u)
 					break;
@@ -665,7 +667,7 @@ void DSTree::dstBuilderRecur(unsigned first, unsigned last, float parentSAH) {
 			}
 
 			unsigned carve_nodes_num = buildCarvingNodes(curr_aabb, right_aabb, new_axis, false, (last - new_index) <= DSTREE_MAX_POLY, new_index + 1u);
-			if (!((last - new_index - 1u) < DSTREE_MAX_POLY && carve_nodes_num))
+			if (!((dst_nodes[dst_nodes.size() - 1].leftChild & 1u) && carve_nodes_num))
 				dstBuilderRecur(new_index + 1u, last, parentSAH);
 		}
 	}
@@ -986,6 +988,17 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 						}
 
 						if (IS_CARVING_NODE) {
+
+							if (!IS_DOUBLE_CARVE) {
+								planeTrav[0] = t[farChild] >= 0.f;
+							}
+							if (IS_DOUBLE_CARVE) {
+								bool is_norm_pos[2] = { is_normal_positive1, is_normal_positive2 };
+								if (is_norm_pos[1 - farChild] == (direction[planes[1 - farChild]] < 0.f) && (t[farChild] <= tMinMax.y ||
+									is_norm_pos[farChild] == (position[planes[farChild]] < curr_node.planes[farChild])))
+									planeTrav[0] = true;
+							}
+							/*
 							tMin[0] = t[1 - farChild];
 							tMin[0] = tMin[tMin[0] < tMin[1]];
 							tMax[0] = t[farChild];
@@ -1012,7 +1025,7 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 								tMax[1] = tMinMax.y;
 								tMax[0] = tMax[tMax[0] > tMax[1]];
 							}
-							planeTrav[0] = tMin[0] <= tMax[0];
+							planeTrav[0] = tMin[0] <= tMax[0];*/
 						}
 					}
 					//planeTrav[0] = true;
@@ -1134,6 +1147,16 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 	if (!traceAABB(meshes[tempInst.geomID].meshAABB, position, direction, invDir, tMinMax)) return temp_hit;
 
 	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
+<<<<<<< Updated upstream
+=======
+	unsigned tempMeshSize = lower_tree.size();
+	if (tempInst.geomID + 1 < meshes.size())
+		tempMeshSize = meshes[tempInst.geomID + 1].DSTreeOffset;
+	unsigned treeDepthMin = 1u, treeDepthMax = 10u; //root has depth == 1
+	//float weight = 0.01f * (treeDepthMax - treeDepthMin + 2u) * lower_tree.size() / ((treeDepthMax + 1) * (1.f + ((tempMeshSize - tempMesh.DSTreeOffset))));
+	//float weight = 0.1f * log10f(lower_tree.size()) * (treeDepthMax - treeDepthMin + 2u) / ((1.f + (tempMeshSize - tempMesh.DSTreeOffset)) * logf(treeDepthMax + 2.f));
+	float weight = 0.01f;
+>>>>>>> Stashed changes
 	LiteMath::float4* tempVertices = &(vertices[tempMesh.firstVertID]);
 	unsigned* tempIndices = &(indices[3 * tempMesh.firstIndID]);
 	unsigned* tempIndicesSorted = &(indices_sorted[tempMesh.firstIndID]);
@@ -1176,17 +1199,32 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 				bool planeTrav[2] = { is_normal_positive1 == (position[planes.x] < curr_node.planes[0u]),
 									  is_normal_positive2 == (position[planes.y] < curr_node.planes[1u]) };
+<<<<<<< Updated upstream
 				planeTrav[0] = planeTrav[0] || (planeTrav[1] && IS_CARVING_NODE);
+=======
+				//bool planeTrav[2] = { false };
+				//planeTrav[0] = planeTrav[0] || (planeTrav[1] && IS_CARVING_NODE);
+>>>>>>> Stashed changes
 				if (!planeTrav[0] && (IS_CARVING_NODE || !CHECK_LEAF_POLY)) {
 					float t[2] = { -1.f }, tMin[2] = { 0.f }, tMax[2] = { tMinMax.y };
 
 					if (isFin[planes.x]) t[0] = invDir[planes.x] * (curr_node.planes[0u] - position[planes.x]);
 					if (isFin[planes.y]) t[1] = invDir[planes.y] * (curr_node.planes[1u] - position[planes.y]);
+<<<<<<< Updated upstream
 					/*
 					if (rightNodes.size() < treeDepth) {
 						if (!IS_CARVING_NODE) temp_hit.coords[3] += weight;
 						if (IS_CARVING_NODE) temp_hit.coords[2] += weight;
 					}*/
+=======
+
+					if (rightNodes.size() >= treeDepthMin && rightNodes.size() <= treeDepthMax) {
+						if (t[0] >= 0.f && t[0] <= tMinMax.y)
+							temp_hit.coords[3] += weight;
+						if (t[1] >= 0.f && t[0] <= tMinMax.y)
+							temp_hit.coords[2] += weight;
+					}
+>>>>>>> Stashed changes
 					if (isFin[planes.x] && isFin[planes.y]) {
 						unsigned farChild = t[0] < t[1];
 						if (!IS_CARVING_NODE) {
@@ -1195,6 +1233,17 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 						}
 
 						if (IS_CARVING_NODE) {
+							
+							if (!IS_DOUBLE_CARVE) {
+								planeTrav[0] = t[farChild] >= 0.f;
+							}
+							if (IS_DOUBLE_CARVE) {
+								bool is_norm_pos[2] = { is_normal_positive1, is_normal_positive2 };
+								if (is_norm_pos[1 - farChild] == (direction[planes[1 - farChild]] < 0.f) && (t[farChild] <= tMinMax.y ||
+									is_norm_pos[farChild] == (position[planes[farChild]] < curr_node.planes[farChild])))
+									planeTrav[0] = true;
+							}
+							/*
 							tMin[0] = t[1 - farChild];
 							tMin[0] = tMin[tMin[0] < tMin[1]];
 							tMax[0] = t[farChild];
@@ -1221,16 +1270,22 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 								tMax[1] = tMinMax.y;
 								tMax[0] = tMax[tMax[0] > tMax[1]];
 							}
-							planeTrav[0] = tMin[0] <= tMax[0];
+							planeTrav[0] = tMin[0] <= tMax[0];*/
 						}
 					}
 				}
 				planeTrav[1] = !planeTrav[0] && planeTrav[1] && !IS_CARVING_NODE;
 				//planeTrav[0] = true;
 				/*
+<<<<<<< Updated upstream
 				if (planeTrav[1] && rightNodes.size() < treeDepth) {
 					//if (!IS_CARVING_NODE) temp_hit.coords[3] += weight;
 					//if (IS_CARVING_NODE) temp_hit.coords[2] += weight;
+=======
+				if ((planeTrav[0] || planeTrav[1]) && (!CHECK_LEAF_POLY || IS_CARVING_NODE) && rightNodes.size() >= treeDepthMin && rightNodes.size() <= treeDepthMax) {
+					if (!IS_CARVING_NODE) temp_hit.coords[3] += weight;
+					if (IS_CARVING_NODE) temp_hit.coords[2] += weight;
+>>>>>>> Stashed changes
 				}*/
 				if (planeTrav[1]) {
 					node = dst_ptr[curr_node.leftChild].rightNode;
