@@ -7,7 +7,7 @@
 #include <memory>
 #include <cassert>
 
-#include "../LiteMath/LiteMath.h"
+#include "LiteMath.h"
 //using namespace LiteMath;
 
 namespace cmesh

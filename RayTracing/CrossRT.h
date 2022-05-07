@@ -4,7 +4,7 @@
 #include <cstddef>
 
 #define LAYOUT_STD140
-#include "../LiteMath/LiteMath.h"
+#include "LiteMath.h"
 
 /**
 \brief API to ray-scene intersection on CPU

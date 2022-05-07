@@ -1,3 +1,0 @@
-/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Blueberry_iScream/source/repos/DSTtest/HydraCore3-main/CMakeFiles/hydra.dir

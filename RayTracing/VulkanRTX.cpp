@@ -1,6 +1,6 @@
 #include "VulkanRTX.h"
-#include "ray_tracing/vk_rt_utils.h"
-#include "vk_utils.h"
+#include "../vkutils/ray_tracing/vk_rt_utils.h"
+#include "../vkutils/vk_utils.h"
 
 ISceneObject* CreateVulkanRTX(std::shared_ptr<SceneManager> a_pScnMgr) { return new VulkanRTX(a_pScnMgr); }
 

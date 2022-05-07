@@ -1,0 +1,3 @@
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/CMakeFiles/volk.dir

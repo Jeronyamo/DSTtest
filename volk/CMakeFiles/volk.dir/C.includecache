@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/volk.c
+volk.h
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/volk.h
+dlfcn.h
+-
+
+/mnt/c/Users/Blueberry_iScream/source/repos/kernel_slicer/apps/volk/volk.h
+vulkan/vk_platform.h
+-
+vulkan/vulkan_core.h
+-
+vulkan/vulkan_win32.h
+-
+vulkan/vulkan_beta.h
+-
+vulkan/vulkan.h
+-
+
