@@ -150,32 +150,32 @@ Bitmap.cpp.s:
 	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/Bitmap.cpp.s
 .PHONY : Bitmap.cpp.s
 
-addsrc/DSTree/dstree.o: addsrc/DSTree/dstree.cpp.o
+addsrc/DSTree/DSTree.o: addsrc/DSTree/DSTree.cpp.o
 
-.PHONY : addsrc/DSTree/dstree.o
+.PHONY : addsrc/DSTree/DSTree.o
 
 # target to build an object file
-addsrc/DSTree/dstree.cpp.o:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.o
-.PHONY : addsrc/DSTree/dstree.cpp.o
+addsrc/DSTree/DSTree.cpp.o:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/DSTree.cpp.o
+.PHONY : addsrc/DSTree/DSTree.cpp.o
 
-addsrc/DSTree/dstree.i: addsrc/DSTree/dstree.cpp.i
+addsrc/DSTree/DSTree.i: addsrc/DSTree/DSTree.cpp.i
 
-.PHONY : addsrc/DSTree/dstree.i
+.PHONY : addsrc/DSTree/DSTree.i
 
 # target to preprocess a source file
-addsrc/DSTree/dstree.cpp.i:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.i
-.PHONY : addsrc/DSTree/dstree.cpp.i
+addsrc/DSTree/DSTree.cpp.i:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/DSTree.cpp.i
+.PHONY : addsrc/DSTree/DSTree.cpp.i
 
-addsrc/DSTree/dstree.s: addsrc/DSTree/dstree.cpp.s
+addsrc/DSTree/DSTree.s: addsrc/DSTree/DSTree.cpp.s
 
-.PHONY : addsrc/DSTree/dstree.s
+.PHONY : addsrc/DSTree/DSTree.s
 
 # target to generate assembly for a file
-addsrc/DSTree/dstree.cpp.s:
-	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/dstree.cpp.s
-.PHONY : addsrc/DSTree/dstree.cpp.s
+addsrc/DSTree/DSTree.cpp.s:
+	$(MAKE) -f CMakeFiles/hydra.dir/build.make CMakeFiles/hydra.dir/addsrc/DSTree/DSTree.cpp.s
+.PHONY : addsrc/DSTree/DSTree.cpp.s
 
 integrator_pt1.o: integrator_pt1.cpp.o
 
@@ -405,9 +405,9 @@ help:
 	@echo "... Bitmap.o"
 	@echo "... Bitmap.i"
 	@echo "... Bitmap.s"
-	@echo "... addsrc/DSTree/dstree.o"
-	@echo "... addsrc/DSTree/dstree.i"
-	@echo "... addsrc/DSTree/dstree.s"
+	@echo "... addsrc/DSTree/DSTree.o"
+	@echo "... addsrc/DSTree/DSTree.i"
+	@echo "... addsrc/DSTree/DSTree.s"
 	@echo "... integrator_pt1.o"
 	@echo "... integrator_pt1.i"
 	@echo "... integrator_pt1.s"

@@ -28,7 +28,7 @@ int main(int argc, const char** argv)
   std::shared_ptr<Integrator> pImpl = nullptr;
   ArgParser args(argc, argv);
   
-  std::string scenePath = "../resources/HydraCore/hydra_app/tests/02_cry_sponza/statex_00001.xml";
+  std::string scenePath = "../resources/HydraCore/hydra_app/tests/test_42/statex_00001.xml";
   if(args.hasOption("-in"))
     scenePath = args.getOptionValue<std::string>("-in");
 

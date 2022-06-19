@@ -51,7 +51,7 @@ add_executable(hydra main.cpp
                      ../loader_utils/hydraxml.cpp
                      #../loader_utils/scene_mgr.cpp
                      ../geo_utils/cmesh.cpp
-                     addsrc/DSTree/dstree.cpp
+                     addsrc/DSTree/DSTree.cpp
                      #../RayTracing/EmbreeRT.cpp #comment either this or dstree.cpp
                      )
 
