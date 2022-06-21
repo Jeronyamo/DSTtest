@@ -1,4 +1,4 @@
-#include "DSTree.h"
+#include "dstree.h"
 
 
 float max(const LiteMath::float2& params) { return params[params.x < params.y]; }
@@ -359,7 +359,7 @@ void DSTree::calculateUpperTreeSAH(unsigned& new_axis, unsigned& new_index, unsi
 	simpleAABB& parentAABB, simpleAABB& leftAABB, simpleAABB& rightAABB, unsigned elem_count) {
 	unsigned index = 0u;
 	new_axis = 3u;
-	float parentSAH = FLT_MAX;
+	float parentSAH = MAXFLOAT;
 	std::vector <unsigned> tempInstances;
 	tempInstances.resize(elem_count);
 
@@ -710,7 +710,7 @@ bool DSTree::traceAABB(const simpleAABB &tempAABB, LiteMath::float3 Position, Li
 }
 
 CRT_Hit DSTree::traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float4* tempVertices, unsigned* tempIndices, uint32_t current_instance) {
-	CRT_Hit tempHitInfo{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
+	CRT_Hit tempHitInfo{ MAXFLOAT, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
 
 	const LiteMath::float3  a = LiteMath::to_float3(tempVertices[tempIndices[0]]);
 	const LiteMath::float3 E1 = LiteMath::to_float3(tempVertices[tempIndices[1]]) - a;
@@ -744,7 +744,7 @@ CRT_Hit DSTree::RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float
 	//for (uint32_t i = 0u; i < instances_info.size(); ++i)
 	//	insts.push_back(i);
 
-	CRT_Hit temp_hit{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
+	CRT_Hit temp_hit{ MAXFLOAT, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
 
 	for (uint32_t i = 0u; i < insts.size(); ++i) {
 		//current_instance = insts[i];
@@ -765,7 +765,7 @@ bool DSTree::RayQuery_AnyHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAn
 	std::vector <uint32_t> insts;
 	findInstHit(posAndNear, dirAndFar, insts);
 
-	CRT_Hit temp_hit{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
+	CRT_Hit temp_hit{ MAXFLOAT, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
 
 	for (uint32_t i = 0u; i < insts.size(); ++i) {
 		//current_instance = insts[i];
@@ -807,7 +807,7 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 	LiteMath::float3 invDir(1.f / dirAndFar.x, 1.f / dirAndFar.y, 1.f / dirAndFar.z);
 	bool isFin[3] = { std::isfinite(invDir.x), std::isfinite(invDir.y), std::isfinite(invDir.z) };
 
-	travStack travInfo{ 0u, { 0.f, FLT_MAX } };
+	travStack travInfo{ 0u, { 0.f, MAXFLOAT } };
 
 	if (!traceAABB(scene_AABB, position, direction, invDir, travInfo.t)) return;
 
@@ -961,8 +961,8 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 	LiteMath::float3 invDir = LiteMath::float3(1.f / direction.x, 1.f / direction.y, 1.f / direction.z);
 	bool isFin[3] = { std::isfinite(invDir.x), std::isfinite(invDir.y), std::isfinite(invDir.z) };
 
-	travStack travInfo{ 0u, { 0.f, FLT_MAX } };
-	CRT_Hit temp_hit{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
+	travStack travInfo{ 0u, { 0.f, MAXFLOAT } };
+	CRT_Hit temp_hit{ MAXFLOAT, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
 
 	if (!traceAABB(tempMesh.meshAABB, position, direction, invDir, travInfo.t)) return temp_hit;
 	if (triang_t < travInfo.t.x) return temp_hit;
