@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+#include <cfloat>
 
 void Integrator::InitRandomGens(int a_maxThreads)
 {
@@ -29,7 +30,7 @@ void Integrator::kernel_InitEyeRay(uint tid, const uint* packedXY, float4* rayPo
                   &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
 }
 
 void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY, 
@@ -57,7 +58,7 @@ void Integrator::kernel_InitEyeRay2(uint tid, const uint* packedXY,
   transform_ray3f(m_worldViewInv, &rayPos, &rayDir);
   
   *rayPosAndNear = to_float4(rayPos, 0.0f);
-  *rayDirAndFar  = to_float4(rayDir, MAXFLOAT);
+  *rayDirAndFar  = to_float4(rayDir, FLT_MAX);
   *gen           = genLocal;
 }
 
@@ -336,7 +337,7 @@ void Integrator::kernel_NextBounce(uint tid, uint bounce, const float4* in_hitPa
   }
 
   *rayPosAndNear = to_float4(OffsRayPos(hit.pos, hit.norm, matSam.direction), 0.0f);
-  *rayDirAndFar  = to_float4(matSam.direction, MAXFLOAT);
+  *rayDirAndFar  = to_float4(matSam.direction, FLT_MAX);
   *rayFlags      = currRayFlags | matSam.flags;
 }
 
