@@ -92,13 +92,15 @@ void DSTree::UpdateGeom_Triangles4f(unsigned a_geomId, const LiteMath::float4* a
 
 uint32_t DSTree::AddInstance(uint32_t a_geomId, const LiteMath::float4x4& a_matrix) {
 	simpleInstance tempInst;
+	simpleMeshInfo tempMesh = meshes[a_geomId];
+
 	tempInst.transf = a_matrix;
 	tempInst.geomID = a_geomId;
-	tempInst.instAABB.min = a_matrix * meshes[a_geomId].meshAABB.min;
-	tempInst.instAABB.max = a_matrix * meshes[a_geomId].meshAABB.max;
+	tempInst.instAABB.min = a_matrix * tempMesh.meshAABB.min;
+	tempInst.instAABB.max = a_matrix * tempMesh.meshAABB.max;
 
-	float edges[6] = { meshes[a_geomId].meshAABB.min.x, meshes[a_geomId].meshAABB.min.y, meshes[a_geomId].meshAABB.min.z,
-					   meshes[a_geomId].meshAABB.max.x, meshes[a_geomId].meshAABB.max.y, meshes[a_geomId].meshAABB.max.z };
+	float edges[6] = { tempMesh.meshAABB.min.x, tempMesh.meshAABB.min.y, tempMesh.meshAABB.min.z,
+					   tempMesh.meshAABB.max.x, tempMesh.meshAABB.max.y, tempMesh.meshAABB.max.z };
 
 	for (unsigned i = 0u; i < 8u; ++i) {
 		LiteMath::float3 tempPos{ edges[3u * (i >> 2)], edges[3u * ((i >> 1) & 1u) + 1u], edges[3u * (i & 1u) + 2u] };
@@ -119,19 +121,30 @@ uint32_t DSTree::AddInstance(uint32_t a_geomId, const LiteMath::float4x4& a_matr
 }
 
 void DSTree::UpdateInstance(uint32_t a_instanceId, const LiteMath::float4x4& a_matrix) {
-	/*instances_info[a_instanceId].transf = a_matrix;
-	instances_info[a_instanceId].instAABB.min = a_matrix * meshes[instances_info[a_instanceId].geomID].meshAABB.min;
-	instances_info[a_instanceId].instAABB.max = a_matrix * meshes[instances_info[a_instanceId].geomID].meshAABB.max;
+	simpleInstance tempInst = instances_info[a_instanceId];
+	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
 
-	
-	for (uint32_t i = 0u; i < 3; ++i) {
-		if (tempInst.instAABB.min[i] > tempInst.instAABB.max[i]) {
-			float temp = tempInst.instAABB.min[i];
-			tempInst.instAABB.min[i] = tempInst.instAABB.max[i];
-			tempInst.instAABB.max[i] = temp;
-		}
+	tempInst.transf = a_matrix;
+	tempInst.instAABB.min = a_matrix * tempMesh.meshAABB.min;
+	tempInst.instAABB.max = a_matrix * tempMesh.meshAABB.max;
+
+	float edges[6] = { tempMesh.meshAABB.min.x, tempMesh.meshAABB.min.y, tempMesh.meshAABB.min.z,
+					   tempMesh.meshAABB.max.x, tempMesh.meshAABB.max.y, tempMesh.meshAABB.max.z };
+
+	for (unsigned i = 0u; i < 8u; ++i) {
+		LiteMath::float3 tempPos{ edges[3u * (i >> 2)], edges[3u * ((i >> 1) & 1u) + 1u], edges[3u * (i & 1u) + 2u] };
+		tempPos = a_matrix * tempPos;
+
+		tempInst.instAABB.min.x = min(tempInst.instAABB.min.x, tempPos.x);
+		tempInst.instAABB.min.y = min(tempInst.instAABB.min.y, tempPos.y);
+		tempInst.instAABB.min.z = min(tempInst.instAABB.min.z, tempPos.z);
+
+		tempInst.instAABB.max.x = max(tempInst.instAABB.max.x, tempPos.x);
+		tempInst.instAABB.max.y = max(tempInst.instAABB.max.y, tempPos.y);
+		tempInst.instAABB.max.z = max(tempInst.instAABB.max.z, tempPos.z);
 	}
-	*/
+
+	instances_info[a_instanceId] = tempInst;
 }
 
 void DSTree::ClearGeom() {
@@ -150,10 +163,10 @@ void DSTree::ClearScene() {
 /* ========  SAH calculation  ======== */
 
 simpleAABB DSTree::getAABB(unsigned index, const LiteMath::float4* tempVertices, const unsigned* tempIndices) {
-	simpleAABB tempAABB;
 	LiteMath::float4 a = tempVertices[tempIndices[3 * index    ]];
 	LiteMath::float4 b = tempVertices[tempIndices[3 * index + 1]];
 	LiteMath::float4 c = tempVertices[tempIndices[3 * index + 2]];
+	simpleAABB tempAABB;
 
 	for (unsigned i = 0u; i < 3u; ++i) {
 		tempAABB.min[i] = min(a[i], min(b[i], c[i]));
@@ -168,8 +181,8 @@ simpleAABB DSTree::mergeAABB(unsigned index, simpleAABB aabb, const LiteMath::fl
 	LiteMath::float4 c = tempVertices[tempIndices[3 * index + 2]];
 
 	for (unsigned i = 0u; i < 3u; ++i) {
-		aabb.min[i] = min(LiteMath::float2(min(LiteMath::float2(aabb.min[i], a[i])), min(LiteMath::float2(b[i], c[i]))));
-		aabb.max[i] = max(LiteMath::float2(max(LiteMath::float2(aabb.max[i], a[i])), max(LiteMath::float2(b[i], c[i]))));
+		aabb.min[i] = min(min(aabb.min[i], a[i]), min(b[i], c[i]));
+		aabb.max[i] = max(max(aabb.max[i], a[i]), max(b[i], c[i]));
 	}
 	return aabb;
 }
@@ -192,9 +205,8 @@ simpleAABB DSTree::mergeInstAABB(unsigned index, simpleAABB aabb) {
 void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_scene_axis) {
 	if (!count) return;
 
-	std::vector <unsigned> stack;
-	stack.resize(count);
-	int first = 0, last = count - 1;
+	unsigned* stack = new unsigned[count];
+	unsigned first = 0, last = count - 1;
 	int top = -1;
 	unsigned stackSize = 0;
 	stack[++top] = 0;
@@ -207,30 +219,27 @@ void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_sce
 		last -= first;
 		unsigned* temp_inst = &(inst_arr[first]);
 		int i = -1;
+		float max2 = instances_info[temp_inst[last]].instAABB.max[current_scene_axis];
+
 		for (unsigned j = 0u; j < last; ++j) {
 			float max1 = instances_info[temp_inst[j]].instAABB.max[current_scene_axis];
-			float max2 = instances_info[temp_inst[last]].instAABB.max[current_scene_axis];
 
 			int res = int(max1 > max2) - int(max1 < max2);
-			if (!res) res = int(&(temp_inst[j]) > &(temp_inst[last])) - int(&(temp_inst[j]) < &(temp_inst[last]));
-			if (res < 0) {
-				++i;
-
-				unsigned temp = temp_inst[i];
+			if (res <= 0) {
+				unsigned temp = temp_inst[++i];
 				temp_inst[i] = temp_inst[j];
 				temp_inst[j] = temp;
 			}
 		}
 
-		++i;
-		unsigned temp = temp_inst[i];
+		unsigned temp = temp_inst[++i];
 		temp_inst[i] = temp_inst[last];
 		temp_inst[last] = temp;
 
 		i += first;
 		last += first;
 
-		if (i - 1 > first) {
+		if (i - 1 > long(first)) {
 			stack[++top] = first;
 			stack[++top] = i - 1;
 		}
@@ -240,14 +249,14 @@ void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_sce
 			stack[++top] = last;
 		}
 	}
+	delete[] stack;
 }
 
 void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_scene_axis, LiteMath::float4* tempVertices, unsigned* tempIndices) {
 	if (!count) return;
 	
-	std::vector <unsigned> stack;
-	stack.resize(count);
-	int first = 0, last = count - 1;
+	unsigned *stack = new unsigned[count];
+	unsigned first = 0, last = count - 1;
 	int top = -1;
 	unsigned stackSize = 0;
 	stack[++top] = 0;
@@ -260,37 +269,39 @@ void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_sce
 		last -= first;
 		unsigned* temp_inst = &(inst_arr[first]);
 		int i = -1;
-		for (unsigned j = 0u; j < last; ++j) {
-			unsigned tempInd = 3 * temp_inst[j];
-			float max1 = max(tempVertices[tempIndices[tempInd]][current_scene_axis],
-							 max(tempVertices[tempIndices[tempInd + 1u]][current_scene_axis],
-								 tempVertices[tempIndices[tempInd + 2u]][current_scene_axis]));
 
-			tempInd = 3 * temp_inst[last];
-			float max2 = max(tempVertices[tempIndices[tempInd]][current_scene_axis],
-							 max(tempVertices[tempIndices[tempInd + 1u]][current_scene_axis],
-								 tempVertices[tempIndices[tempInd + 2u]][current_scene_axis]));
+		unsigned tempInd = 3 * temp_inst[last];
+		unsigned cmp_indices[3] = { tempIndices[tempInd], tempIndices[tempInd + 1u], tempIndices[tempInd + 2u] };
+		float vert[3] = { tempVertices[cmp_indices[0]][current_scene_axis],
+						  tempVertices[cmp_indices[1]][current_scene_axis],
+						  tempVertices[cmp_indices[2]][current_scene_axis] };
+		float max2 = max(vert[vert[0] < vert[1]], vert[2]);
+
+		for (unsigned j = 0u; j < last; ++j) {
+			tempInd = 3 * temp_inst[j];
+			unsigned cmp_indices1[3] = { tempIndices[tempInd], tempIndices[tempInd + 1u], tempIndices[tempInd + 2u] };
+			float vert1[3] = { tempVertices[cmp_indices1[0]][current_scene_axis],
+							   tempVertices[cmp_indices1[1]][current_scene_axis],
+							   tempVertices[cmp_indices1[2]][current_scene_axis] };
+			vert1[1] = vert1[1u + unsigned(vert1[1] < vert1[2])];
+			float max1 = vert1[vert1[0] < vert1[1]];
 
 			int res = int(max1 > max2) - int(max1 < max2);
-			if (!res) res = int(&(temp_inst[j]) > &(temp_inst[last])) - int(&(temp_inst[j]) < &(temp_inst[last]));
-			if (res < 0) {
-				++i;
-
-				unsigned temp = temp_inst[i];
+			if (res <= 0) {
+				unsigned temp = temp_inst[++i];
 				temp_inst[i] = temp_inst[j];
 				temp_inst[j] = temp;
 			}
 		}
 
-		++i;
-		unsigned temp = temp_inst[i];
+		unsigned temp = temp_inst[++i];
 		temp_inst[i] = temp_inst[last];
 		temp_inst[last] = temp;
 
 		i += first;
 		last += first;
 
-		if (i - 1 > first) {
+		if (i - 1 > long(first)) {
 			stack[++top] = first;
 			stack[++top] = i - 1;
 		}
@@ -300,6 +311,7 @@ void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_sce
 			stack[++top] = last;
 		}
 	}
+	delete[] stack;
 }
 
 float DSTree::calculateSAH(unsigned& new_axis, unsigned& new_index, unsigned* instances_ptr,
@@ -309,8 +321,7 @@ float DSTree::calculateSAH(unsigned& new_axis, unsigned& new_index, unsigned* in
 	unsigned* tempIndices = &(indices[3u * meshes[meshes.size() - 1].firstIndID]);
 	unsigned index = 0u, ind[3] = { 0 };
 
-	std::vector <unsigned> tempInstances;
-	tempInstances.resize(elem_count);
+	unsigned *tempInstances = new unsigned[elem_count];
 	new_axis = 3u;
 
 	for (unsigned curr_axis = 0u; curr_axis < 3u; ++curr_axis) {
@@ -340,18 +351,17 @@ float DSTree::calculateSAH(unsigned& new_axis, unsigned& new_index, unsigned* in
 				new_axis = curr_axis;
 			}
 		}
-		if (new_axis == curr_axis) {
-			for (unsigned i = 0u; i < elem_count; ++i)
-				tempInstances[i] = instances_ptr[i];
+		if (curr_axis < 2u && new_axis == curr_axis) {
+			std::memcpy(tempInstances, instances_ptr, sizeof(unsigned) * elem_count);
 		}
 		right_surfs.clear();
 	}
 
 	if (new_axis < 2u) {
-		for (unsigned i = 0u; i < elem_count; ++i)
-			instances_ptr[i] = tempInstances[i];
+		std::memcpy(instances_ptr, tempInstances, sizeof(unsigned) * elem_count);
 	}
 
+	delete[] tempInstances;
 	return parentSAH;
 }
 
@@ -360,8 +370,7 @@ void DSTree::calculateUpperTreeSAH(unsigned& new_axis, unsigned& new_index, unsi
 	unsigned index = 0u;
 	new_axis = 3u;
 	float parentSAH = FLT_MAX;
-	std::vector <unsigned> tempInstances;
-	tempInstances.resize(elem_count);
+	unsigned* tempInstances = new unsigned[elem_count];
 
 	for (unsigned curr_axis = 0u; curr_axis < 3u; ++curr_axis) {
 		std::vector <simpleAABB> right_surfs;
@@ -389,19 +398,18 @@ void DSTree::calculateUpperTreeSAH(unsigned& new_axis, unsigned& new_index, unsi
 				new_axis = curr_axis;
 			}
 		}
-		if (new_axis == curr_axis) {
-			for (unsigned i = 0u; i < elem_count; ++i)
-				tempInstances[i] = instances_ptr[i];
+		if (curr_axis < 2u && new_axis == curr_axis) {
+			std::memcpy(tempInstances, instances_ptr, sizeof(unsigned) * elem_count);
 		}
 
 		right_surfs.clear();
 	}
 
 	if (new_axis < 2u) {
-		for (unsigned i = 0u; i < elem_count; ++i)
-			instances_ptr[i] = tempInstances[i];
+		std::memcpy(instances_ptr, tempInstances, sizeof(unsigned) * elem_count);
 	}
 
+	delete[] tempInstances;
 	return;
 }
 
@@ -687,8 +695,8 @@ bool DSTree::traceAABB(const simpleAABB &tempAABB, LiteMath::float3 Position, Li
 
 			continue;
 		}
-		float t1 = (Min[dim] - AABBeps - Position[dim]) * InvDir[dim];
-		float t2 = (Max[dim] + AABBeps - Position[dim]) * InvDir[dim];
+		float t1 = (Min[dim] /*- AABBeps*/ - Position[dim]) * InvDir[dim];
+		float t2 = (Max[dim] /*+ AABBeps*/ - Position[dim]) * InvDir[dim];
 
 		if (t1 > t2) {
 			float temp_t = t1;
@@ -705,7 +713,7 @@ bool DSTree::traceAABB(const simpleAABB &tempAABB, LiteMath::float3 Position, Li
 		if (tMin > tMax || tMax < 0.0f)
 			return false;
 	}
-	tMinMax = LiteMath::float2(max(LiteMath::float2(tMin, 0.f)), tMax);
+	tMinMax = LiteMath::float2(max(tMin, 0.f), tMax);
 	return tMin < tMax && tMax >= 0.0f;
 }
 
@@ -811,7 +819,9 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 
 	if (!traceAABB(scene_AABB, position, direction, invDir, travInfo.t)) return;
 
-	std::vector <travStack> param_stack;
+	//std::vector <travStack> param_stack;
+	travStack param_stack[64];
+	int stack_ind = -1;
 	do {
 		DSNode curr_node;
 		bool CHECK_LEAF_POLY(false), IS_CARVING_NODE(false), IS_DOUBLE_CARVE(false);
@@ -872,7 +882,8 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 							travInfo = t_info[1];
 						}
 
-						param_stack.push_back(tempInfo);
+						//param_stack.push_back(tempInfo);
+						param_stack[++stack_ind] = tempInfo;
 					}
 					if (trav_correct[0] != trav_correct[1]) {
 						if (trav_correct[0]) travInfo = t_info[0];
@@ -881,10 +892,13 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 					if (!(trav_correct[0] || trav_correct[1])) {
 						travInfo.node = 0u;
 
+						if (stack_ind >= 0)
+							travInfo = param_stack[stack_ind--];
+						/*
 						if (!param_stack.empty()) {
 							travInfo = *param_stack.rbegin();
 							param_stack.pop_back();
-						}
+						}*/
 					}
 				}
 
@@ -920,10 +934,13 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 					if (skip || CHECK_LEAF_POLY) {
 						travInfo.node = 0u;
 
+						if (stack_ind >= 0)
+							travInfo = param_stack[stack_ind--];
+						/*
 						if (!param_stack.empty()) {
 							travInfo = *param_stack.rbegin();
 							param_stack.pop_back();
-						}
+						}*/
 					}
 
 					CHECK_LEAF_POLY = CHECK_LEAF_POLY && !skip;
@@ -936,10 +953,13 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 			if (!IS_CARVING_NODE) {
 				travInfo.node = 0u;
 
+				if (stack_ind >= 0)
+					travInfo = param_stack[stack_ind--];
+				/*
 				if (!param_stack.empty()) {
 					travInfo = *param_stack.rbegin();
 					param_stack.pop_back();
-				}
+				}*/
 			}
 
 			insts.push_back(curr_node.leftChild);
@@ -966,12 +986,15 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 	if (!traceAABB(tempMesh.meshAABB, position, direction, invDir, travInfo.t)) return temp_hit;
 	if (triang_t < travInfo.t.x) return temp_hit;
+	travInfo.t.y = min(travInfo.t.y, triang_t);
 
 	LiteMath::float4* tempVertices = &(vertices[tempMesh.firstVertID]);
 	unsigned* tempIndices = &(indices[3u * tempMesh.firstIndID]);
 	unsigned* tempIndicesSorted = &(indices_sorted[tempMesh.firstIndID]);
 	DSNode* dst_ptr = &(lower_tree[tempMesh.DSTreeOffset]);
-	std::vector <travStack> param_stack;
+	//std::vector <travStack> param_stack;
+	travStack param_stack[64];
+	int stack_ind = -1;
 
 	do {
 		DSNode curr_node;
@@ -1034,7 +1057,8 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 						}
 
 						if (temp_hit.t >= tempInfo.t.x)
-							param_stack.push_back(tempInfo);
+							//param_stack.push_back(tempInfo);
+							param_stack[++stack_ind] = tempInfo;
 					}
 					if (trav_correct[0] != trav_correct[1]) {
 						if (trav_correct[0]) travInfo = t_info[0];
@@ -1043,10 +1067,13 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 					if (!(trav_correct[0] || trav_correct[1])) {
 						travInfo.node = 0u;
 
+						if (stack_ind >= 0)
+							travInfo = param_stack[stack_ind--];
+						/*
 						if (!param_stack.empty()) {
 							travInfo = *param_stack.rbegin();
 							param_stack.pop_back();
-						}
+						}*/
 					}
 				}
 
@@ -1082,10 +1109,13 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 					if (skip || CHECK_LEAF_POLY) {
 						travInfo.node = 0u;
 
+						if (stack_ind >= 0)
+							travInfo = param_stack[stack_ind--];
+						/*
 						if (!param_stack.empty()) {
 							travInfo = *param_stack.rbegin();
 							param_stack.pop_back();
-						}
+						}*/
 					}
 
 					CHECK_LEAF_POLY = CHECK_LEAF_POLY && !skip;
@@ -1101,10 +1131,13 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 				max_node_tr_index = static_cast<unsigned>(curr_node.planes[0]);
 				travInfo.node = 0u;
 
+				if (stack_ind >= 0)
+					travInfo = param_stack[stack_ind--];
+				/*
 				if (!param_stack.empty()) {
 					travInfo = *param_stack.rbegin();
 					param_stack.pop_back();
-				}
+				}*/
 			}
 
 			max_node_tr_index += curr_node.leftChild;
