@@ -92,13 +92,15 @@ void DSTree::UpdateGeom_Triangles4f(unsigned a_geomId, const LiteMath::float4* a
 
 uint32_t DSTree::AddInstance(uint32_t a_geomId, const LiteMath::float4x4& a_matrix) {
 	simpleInstance tempInst;
+	simpleMeshInfo tempMesh = meshes[a_geomId];
+
 	tempInst.transf = a_matrix;
 	tempInst.geomID = a_geomId;
-	tempInst.instAABB.min = a_matrix * meshes[a_geomId].meshAABB.min;
-	tempInst.instAABB.max = a_matrix * meshes[a_geomId].meshAABB.max;
+	tempInst.instAABB.min = a_matrix * tempMesh.meshAABB.min;
+	tempInst.instAABB.max = a_matrix * tempMesh.meshAABB.max;
 
-	float edges[6] = { meshes[a_geomId].meshAABB.min.x, meshes[a_geomId].meshAABB.min.y, meshes[a_geomId].meshAABB.min.z,
-					   meshes[a_geomId].meshAABB.max.x, meshes[a_geomId].meshAABB.max.y, meshes[a_geomId].meshAABB.max.z };
+	float edges[6] = { tempMesh.meshAABB.min.x, tempMesh.meshAABB.min.y, tempMesh.meshAABB.min.z,
+					   tempMesh.meshAABB.max.x, tempMesh.meshAABB.max.y, tempMesh.meshAABB.max.z };
 
 	for (unsigned i = 0u; i < 8u; ++i) {
 		LiteMath::float3 tempPos{ edges[3u * (i >> 2)], edges[3u * ((i >> 1) & 1u) + 1u], edges[3u * (i & 1u) + 2u] };
@@ -161,10 +163,10 @@ void DSTree::ClearScene() {
 /* ========  SAH calculation  ======== */
 
 simpleAABB DSTree::getAABB(unsigned index, const LiteMath::float4* tempVertices, const unsigned* tempIndices) {
-	simpleAABB tempAABB;
 	LiteMath::float4 a = tempVertices[tempIndices[3 * index    ]];
 	LiteMath::float4 b = tempVertices[tempIndices[3 * index + 1]];
 	LiteMath::float4 c = tempVertices[tempIndices[3 * index + 2]];
+	simpleAABB tempAABB;
 
 	for (unsigned i = 0u; i < 3u; ++i) {
 		tempAABB.min[i] = min(a[i], min(b[i], c[i]));
@@ -252,8 +254,8 @@ void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_sce
 
 void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_scene_axis, LiteMath::float4* tempVertices, unsigned* tempIndices) {
 	if (!count) return;
-
-	unsigned* stack = new unsigned[count];
+  
+	unsigned *stack = new unsigned[count];
 	unsigned first = 0, last = count - 1;
 	int top = -1;
 	unsigned stackSize = 0;
@@ -319,7 +321,7 @@ float DSTree::calculateSAH(unsigned& new_axis, unsigned& new_index, unsigned* in
 	unsigned* tempIndices = &(indices[3u * meshes[meshes.size() - 1].firstIndID]);
 	unsigned index = 0u, ind[3] = { 0 };
 
-	unsigned* tempInstances = new unsigned[elem_count];
+	unsigned *tempInstances = new unsigned[elem_count];
 	new_axis = 3u;
 
 	for (unsigned curr_axis = 0u; curr_axis < 3u; ++curr_axis) {
