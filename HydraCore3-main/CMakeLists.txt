@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.10)
 project (test)
 
 # get rid of annoying MSVC warnings.
@@ -51,7 +51,7 @@ add_executable(hydra main.cpp
                      ../loader_utils/hydraxml.cpp
                      #../loader_utils/scene_mgr.cpp
                      ../geo_utils/cmesh.cpp
-                     addsrc/DSTree/DSTree.cpp
+                     addsrc/DSTree/dstree.cpp
                      #../RayTracing/EmbreeRT.cpp #comment either this or dstree.cpp
                      )
 
