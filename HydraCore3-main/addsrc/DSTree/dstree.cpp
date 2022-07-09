@@ -1,5 +1,5 @@
-#include "DSTree.h"
-
+#include "dstree.h"
+#include <cfloat>
 
 float max(const LiteMath::float2& params) { return params[params.x < params.y]; }
 float min(const LiteMath::float2& params) { return params[params.x > params.y]; }
@@ -254,7 +254,7 @@ void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_sce
 
 void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_scene_axis, LiteMath::float4* tempVertices, unsigned* tempIndices) {
 	if (!count) return;
-	
+  
 	unsigned *stack = new unsigned[count];
 	unsigned first = 0, last = count - 1;
 	int top = -1;
@@ -263,7 +263,7 @@ void DSTree::qsortLower(unsigned *inst_arr, unsigned count, unsigned current_sce
 	stack[++top] = last;
 
 	while (top > 0) {
-		last  = stack[top--];
+		last = stack[top--];
 		first = stack[top--];
 
 		last -= first;
@@ -424,8 +424,6 @@ unsigned DSTree::buildHeader(bool is_leaf, bool is_carve, unsigned info) {
 unsigned DSTree::buildCarvingNodes(simpleAABB& parent_aabb, simpleAABB& child_aabb, unsigned axis,
 									bool is_left_child, bool is_leaf, unsigned triangle_index) {
 	unsigned size1 = dst_nodes.size();
-	if (is_leaf && !triangle_index)
-		int u = 0;
 	unsigned sortInd[6u] = { 0u, 1u, 2u, 3u, 4u, 5u };
 	unsigned split_plane = axis + 3u * unsigned(is_left_child);
 	float child[6u] = { child_aabb.min.x, child_aabb.min.y, child_aabb.min.z, child_aabb.max.x, child_aabb.max.y, child_aabb.max.z };
@@ -863,7 +861,7 @@ void DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar
 							float temp_t[2] = { travInfo.t.x, travInfo.t.y };
 							temp_t[is_min_left] = t[i];
 
-							if ( is_min_left) t_info[i].t.x = temp_t[temp_t[0] < temp_t[1]];
+							if (is_min_left) t_info[i].t.x = temp_t[temp_t[0] < temp_t[1]];
 							if (!is_min_left) t_info[i].t.y = temp_t[temp_t[0] > temp_t[1]];
 						}
 
@@ -1037,7 +1035,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 							float temp_t[2] = { travInfo.t.x, travInfo.t.y };
 							temp_t[is_min_left] = t[i];
 
-							if ( is_min_left) t_info[i].t.x = temp_t[temp_t[0] < temp_t[1]];
+							if (is_min_left) t_info[i].t.x = temp_t[temp_t[0] < temp_t[1]];
 							if (!is_min_left) t_info[i].t.y = temp_t[temp_t[0] > temp_t[1]];
 						}
 

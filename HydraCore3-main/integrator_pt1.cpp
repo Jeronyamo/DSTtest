@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+#include <cfloat>
 
 void Integrator::InitRandomGens(int a_maxThreads)
 {
