@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+#include <cfloat>
 
 void Integrator::InitRandomGens(int a_maxThreads)
 {
@@ -175,7 +176,7 @@ void Integrator::kernel_GetRayColor(uint tid, const Lite_Hit* in_hit, const uint
   //const float3 color = mdata.w > 0.0f ? clamp(float3(mdata.w, mdata.w, mdata.w), 0.0f, 1.0f) : to_float3(mdata);
   float3 temp_color = mdata.w > 0.0f ? clamp(float3(mdata.w,mdata.w,mdata.w), 0.0f, 1.0f) : to_float3(mdata);
   //if (lhit.instId == 0)
-      temp_color = float3(0.1f + 0.9f * (lhit.instId & 1), 0.1f + 0.8f * (lhit.instId & 2), 0.1f + 0.8f * (lhit.instId & 4));
+      //temp_color = float3(0.1f + 0.9f * (lhit.instId & 1), 0.1f + 0.8f * (lhit.instId & 2), 0.1f + 0.8f * (lhit.instId & 4));
       //if (tid == 7111u || tid == 7119u)
       //    temp_color = float3(1.f, 1.f, 1.f);
   const float3 color = temp_color;
