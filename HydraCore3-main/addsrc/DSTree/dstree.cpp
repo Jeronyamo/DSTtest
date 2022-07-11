@@ -779,21 +779,25 @@ CRT_Hit DSTree::traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direct
 	const LiteMath::float3  P = cross(Direction, E2);
 	const float d = dot(E1, P);
 
-	if (d < -LiteMath::EPSILON || d > LiteMath::EPSILON) {
-		const LiteMath::float3 T = Position - a;
-		const float f = 1.0f / d;
-		const float temp_u = f * dot(P, T);
-		const LiteMath::float3 Q = cross(T, E1);
-		const float temp_v = f * dot(Direction, Q);
-		const float temp_t = f * dot(E2, Q);
+	if (d == 0.f) return tempHitInfo;
 
-		if (temp_u >= 0.0f && temp_u <= 1.0f && ((temp_u + temp_v) <= 1.0f + AABBeps) &&
-			temp_v >= 0.0f && temp_t >= 0.0f) {
+	const LiteMath::float3 T = Position - a;
+	const float f = 1.f / d;
+	const float temp_u = f * dot(P, T);
+	
+	if (temp_u < 0.f || temp_u > 1.f) return tempHitInfo;
 
-			tempHitInfo.coords[0] = temp_u;
-			tempHitInfo.coords[1] = temp_v;
-			tempHitInfo.t = temp_t;
-		}
+	const LiteMath::float3 Q = cross(T, E1);
+	const float temp_v = f * dot(Direction, Q);
+
+	if (temp_v < 0.f || (temp_u + temp_v) > 1.f) return tempHitInfo;
+
+	const float temp_t = f * dot(E2, Q);
+
+	if (temp_t >= 0.f) {
+		tempHitInfo.coords[0] = temp_u;
+		tempHitInfo.coords[1] = temp_v;
+		tempHitInfo.t = temp_t;
 	}
 	return tempHitInfo;
 }
