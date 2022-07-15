@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.10)
 project (test)
 
+#set(CMAKE_BUILD_TYPE Release)
 # get rid of annoying MSVC warnings.
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 

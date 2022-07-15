@@ -58,6 +58,7 @@ class DSTree : public ISceneObject {
 
 
 /* ================  Comparator functions  ================ */
+	float getMaxElem(unsigned *indices_ptr, LiteMath::float4 *vertices_ptr, unsigned current_scene_axis);
 	void qsortUpper(unsigned *inst_arr, unsigned count, unsigned current_scene_axis);
 	void qsortLower(unsigned *inst_arr, unsigned count, unsigned current_scene_axis, LiteMath::float4* tempVertices, unsigned* tempIndices);
 
@@ -96,9 +97,9 @@ class DSTree : public ISceneObject {
 
 
   /* ========  Ray traverse  ======== */
-	std::vector <unsigned> TreePath(unsigned init, unsigned find);	//finding the fastest way to a certain node
+	std::vector <unsigned> TreePath(unsigned init, unsigned find);	//finding the fastest way to a specific node
 	bool traceAABB(const simpleAABB& tempAABB, LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float3 InvDir, LiteMath::float2& tMinMax);
-	CRT_Hit traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float4* tempVertices, unsigned* tempInsices, uint32_t current_instance);
+	CRT_Hit traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float4* tempVertices, unsigned* tempInsices);
 	CRT_Hit findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance, float triang_t);
 	void findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, std::vector <uint32_t> &insts);
 
