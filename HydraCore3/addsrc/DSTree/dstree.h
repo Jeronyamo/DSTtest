@@ -1,11 +1,20 @@
 #pragma once
 
-#include "dst.h"
 #include "../../../RayTracing/CrossRT.h"
+#include "../Vis/vis.h"
 //#include "../AddHeaders/CrossRT.h"
 #include <iostream>
 //#include <fstream>
 //#include <iomanip>
+
+
+//16 bytes
+struct DSNode {
+	unsigned leftChild = 0u;
+	unsigned rightNode = 0u;
+	float    planes[2] = { 0.f, 0.f };
+};
+
 
 struct simpleDSTinfo {
 	bool is_leaf;
@@ -55,7 +64,6 @@ class DSTree : public ISceneObject {
 	std::vector <DSNode> lower_tree; //stores arrays of meshes' DST
 	std::vector <unsigned> instances; //temp array for builder; stores indices while sorting
 	std::vector <DSNode> dst_nodes; //temp array for builder; builder output
-
 
 
 /* ================  Comparator functions  ================ */

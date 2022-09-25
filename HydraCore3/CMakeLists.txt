@@ -9,7 +9,8 @@ set (CMAKE_CXX_STANDARD 17)
 
 include_directories(".")
 if(WIN32)
-  link_directories(${ADDITIONAL_LIBRARY_DIRS})
+  #link_directories("./ext/glfw")
+  link_directories(${ADDITIONAL_LIBRARY_DIRS} "./ext/glfw")
 endif()
 
 #list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}") # to find 'FindFreeImage.cmake' script
@@ -26,10 +27,12 @@ include_directories(#"../vkutils"
                     "../loader_utils"
                     "../geo_utils"
                     "../RayTracing"
-                    "../utils")
+                    "../utils"
+                    "./ext/GLAD/include"
+                    "./ext/glfw/include")
                     
 #link_directories("../volk")
-link_directories("../RayTracing/lib")
+link_directories("../RayTracing/lib" )
 
 #add_compile_definitions(USE_VOLK)
 
@@ -46,16 +49,34 @@ add_executable(hydra main.cpp
                      ../LiteMath/Image2d.cpp
                      #integrator_pt1_generated.cpp
                      #integrator_pt1_generated_init.cpp 
-                     #integrator_pt1_generated_ds.cpp 
+                     #integrator_pt1_generated_ds.cpp
+                     ./ext/GLAD/src/glad.c
                      ../loader_utils/pugixml.cpp
                      ../loader_utils/hydraxml.cpp
                      #../loader_utils/scene_mgr.cpp
                      ../geo_utils/cmesh.cpp
                      addsrc/DSTree/dstree.cpp
                      #../RayTracing/EmbreeRT.cpp #comment either this or dstree.cpp
-                     )
+                     addsrc/Vis/vis.cpp
+                     ext/imgui/imgui.cpp
+                     ext/imgui/imgui_tables.cpp
+                     ext/imgui/imgui_draw.cpp
+                     ext/imgui/imgui_widgets.cpp
+                     #ext/imgui/imgui_demo.cpp
+                     ext/imgui/backends/imgui_impl_glfw.cpp
+                     ext/imgui/backends/imgui_impl_opengl3.cpp)
 
 set_target_properties(hydra PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-target_link_libraries(hydra LINK_PUBLIC  OpenMP::OpenMP_CXX # dl     ${FREEIMAGE_LIBRARIES}
-                      #embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tasking
-                      ) 
+target_link_libraries(hydra LINK_PUBLIC  OpenMP::OpenMP_CXX #glfw3  dl     ${FREEIMAGE_LIBRARIES}
+                        #embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tasking
+                        )
+if(CMAKE_SYSTEM_NAME STREQUAL Windows)
+    target_link_libraries(hydra LINK_PUBLIC glfw3  #dl    ${FREEIMAGE_LIBRARIES}
+                          #embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tasking
+                          )
+elseif(CMAKE_SYSTEM_NAME STREQUAL Linux)
+    find_package(glfw3 REQUIRED)
+    target_link_libraries(hydra LINK_PUBLIC glfw  dl # glfw3  ${FREEIMAGE_LIBRARIES}
+                          #embree3 embree_sse42 embree_avx embree_avx2 lexers simd sys tasking
+                          )
+endif()

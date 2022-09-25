@@ -625,6 +625,10 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 		return;
 
 	size_t instances_info_size = instances_info.size();
+
+
+/*  ============  File input (TODO later)  ============  */
+
 	//std::cout << "Triangles: " << indices.size() / 3 << std::endl;
 	//std::cout << "Instances: " << instances_info_size << std::endl;
 	/*std::fstream dstFile;
@@ -661,7 +665,8 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 
 		dstFile.open("./dstree", std::fstream::out | std::fstream::trunc);*/
 
-	/*  ========  Upper Tree  ========  */
+
+	/*  ============  Upper Tree  ============  */
 	dst_nodes.clear();
 	instances.clear();
 
@@ -669,7 +674,7 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 		instances.push_back(instances.size());
 
 	dstBuilderRecurUpper(0u, instances_info_size - 1u);
-
+	std::cout << "Float3 size: " << sizeof(LiteMath::float3) << std::endl;
 	upper_tree = dst_nodes;
 	dst_nodes.clear();
 	if (instances_info_size)
@@ -677,6 +682,12 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 	for (uint32_t i = 1u; i < instances_info_size; ++i) {
 		scene_AABB = mergeInstAABB(i, scene_AABB);
 	}
+
+	Visualizer dst_vis;
+	dst_vis.start();
+
+
+/*  ============  File output (TODO later)  ============  */
 	/*
 	size_t trNum = instances_info_size;
 	for (uint32_t i = 0u; i < instances_info_size; ++i)
