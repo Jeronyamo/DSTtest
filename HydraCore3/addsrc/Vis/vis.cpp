@@ -1,10 +1,13 @@
 #include "vis.h"
 
-#define MW_VER_MAJ 4
-#define MW_VER_MIN 2
-#define MW_RESIZABLE GL_TRUE
 #define MW_WIDTH  1024
 #define MW_HEIGHT 1024
+#define MW_RESIZABLE GL_TRUE
+
+#define MW_VER_MAJ 4
+#define MW_VER_MIN 2
+#define MW_GLSL_VERSION "#version 420"  //should be changed together with MW_VER_MAJ, MW_VER_MIN
+
 #define MW_TITLE "DST Visualizer"
 
 
@@ -25,6 +28,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 }
+
 
 
 Visualizer::Visualizer() {
@@ -57,21 +61,87 @@ Visualizer::Visualizer() {
 	glViewport(0, 0, fb_width, fb_height);
 }
 
+
 Visualizer::~Visualizer() {
 	glfwDestroyWindow(window);
+	glfwTerminate();
 }
+
+
+void Visualizer::addMesh(float* tri_buf, size_t tri_buf_size_bytes, std::vector <std::vector <float>> &tree_buf, VIS_BUFFER_TYPE tree_buf_type) {
+
+}
+
 
 void Visualizer::create_buffer() {
 
 }
 
+
 void Visualizer::create_program() {
 
 }
 
+
+void Visualizer::ImGUI_initialization() {
+	const char* glsl_version = MW_GLSL_VERSION;
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init(glsl_version);
+}
+
+
 void Visualizer::start() {
+	ImGUI_initialization();
+
+	ImVec4 clear_color = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	unsigned num_meshes = 11u;
+	bool *active_meshes = new bool[num_meshes];
+	for (unsigned i = 0u; i < num_meshes; ++i)
+		active_meshes[i] = false;
+
 	while (!glfwWindowShouldClose(window)) {
-		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		//Draw meshes here
+
+		{
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			ImGui::Begin("DST visualizer");
+			ImGui::Text("Active meshes:   ");
+
+			for (unsigned i = 0u; i < num_meshes; ++i) {
+				if (ImGui::Selectable((std::string("   ") + std::to_string(i) + std::string("   ")).c_str(), active_meshes[i], 0, ImVec2(55, 30)))
+					active_meshes[i] = !active_meshes[i];
+			}
+
+			ImGui::SameLine();
+			ImGui::End();
+		}
+
+		ImGui::Render();
+		int display_w, display_h;
+		glfwGetFramebufferSize(window, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+		glClear(GL_COLOR_BUFFER_BIT);
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		glfwSwapBuffers(window);
 	}
+
+	delete[] active_meshes;
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }

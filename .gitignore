@@ -1785,3 +1785,7 @@ tests/test_42/data/chunk_00007.vsgf
 tests/test_42/data/chunk_00008.vsgf
 tests/test_42/statex_00001.xml
 HydraCore3/z_out.bmp
+HydraCore3/.vs/HydraCore3/v16/ipch/AutoPCH/487de9588c10ae4/MAIN.ipch
+HydraCore3/.vs/HydraCore3/v16/ipch/AutoPCH/f86caf3c4a7e438a/IMGUI_WIDGETS.ipch
+HydraCore3/imgui.ini
+HydraCore3/out/build/x64-Debug/imgui.ini
