@@ -14,7 +14,9 @@ float min(float par1, float par2) {
 	return params[params[0] > params[1]];
 }
 
-
+//get info from tree in a simple form
+std::vector <std::vector<simpleDSTinfo>> tree_info;
+std::vector <std::vector<float>> tree_surfs;
 unsigned DSTree::AddGeom_Triangles3f(const float* a_vpos3f, size_t a_vertNumber, const uint32_t* a_triIndices, size_t a_indNumber, BuildQuality a_qualityLevel, size_t vByteStride) {
 	simpleMeshInfo tempInfo;
 	tempInfo.firstVertID  = -1;
@@ -74,6 +76,7 @@ unsigned DSTree::AddGeom_Triangles3f(const float* a_vpos3f, size_t a_vertNumber,
 	dst_nodes.clear();
 
 	dstBuilderRecur(0u, instances.size() - 1, SAH_MAX);
+	//read the tree form dst_nodes and save to tree_info[mesh_ind]
 
 	meshes[meshes.size() - 1].DSTreeOffset = lower_tree.size();
 	lower_tree.insert(lower_tree.end(), dst_nodes.begin(), dst_nodes.end());
@@ -283,6 +286,83 @@ void DSTree::qsortUpper(unsigned* inst_arr, unsigned count, unsigned current_sce
 	}
 	delete[] stack;
 }
+
+
+void DSTree::dst_input(char* path) {
+	/*  ============  File input (TODO later)  ============  */
+
+	//std::cout << "Triangles: " << indices.size() / 3 << std::endl;
+	//std::cout << "Instances: " << instances_info_size << std::endl;
+	/*std::fstream dstFile;
+	dstFile.open("./dstree", std::fstream::in);
+
+	if (dstFile.is_open() && !dstFile.eof()) {
+		std::cout << "There is a file" << std::endl;
+		dstFile >> scene_AABB.min.x;
+		dstFile >> scene_AABB.min.y;
+		dstFile >> scene_AABB.min.z;
+		dstFile >> scene_AABB.max.x;
+		dstFile >> scene_AABB.max.y;
+		dstFile >> scene_AABB.max.z;
+
+		uint32_t dst_size;
+		dstFile >> dst_size;
+
+		DSNode tempNode;
+		for (uint32_t j = 0u; j < dst_size; ++j) {
+			dstFile >> tempNode.leftChild;
+			dstFile >> tempNode.rightNode;
+			dstFile >> tempNode.planes[0];
+			dstFile >> tempNode.planes[1];
+
+			if (!dstFile.eof()) dst_nodes.push_back(tempNode);
+		}
+
+		for (uint32_t k = 0u; k < instances_size; ++k) {
+			dstFile >> instances[k];
+		}
+	}
+	if (!dst_nodes.size()) {
+		std::cout << "The file was empty" << std::endl;
+
+		dstFile.open("./dstree", std::fstream::out | std::fstream::trunc);*/
+}
+
+void DSTree::dst_output(char* path) {
+	/*  ============  File output (TODO later)  ============  */
+		/*
+		size_t trNum = instances_info_size;
+		for (uint32_t i = 0u; i < instances_info_size; ++i)
+			trNum += (meshes[instances_info[i].geomID].lastIndID - meshes[instances_info[i].geomID].firstIndID);
+		std::cout << "Triangles: " << trNum << std::endl;
+		std::cout << "Upper tree: " << upper_tree.size() << "; Lower tree: " << lower_tree.size() << std::endl;
+		std::cout << "AABB min: " << scene_AABB.min.x << ", " << scene_AABB.min.y << ", " << scene_AABB.min.z << std::endl;
+		std::cout << "AABB max: " << scene_AABB.max.x << ", " << scene_AABB.max.y << ", " << scene_AABB.max.z << std::endl;*/
+
+		/*
+		dstFile << std::setprecision(16) << scene_AABB.min.x << " ";
+		dstFile << std::setprecision(16) << scene_AABB.min.y << " ";
+		dstFile << std::setprecision(16) << scene_AABB.min.z << " ";
+		dstFile << std::setprecision(16) << scene_AABB.max.x << " ";
+		dstFile << std::setprecision(16) << scene_AABB.max.y << " ";
+		dstFile << std::setprecision(16) << scene_AABB.max.z << " \n\n";
+		dstFile << dst_nodes.size() << " \n\n\n";
+
+		for (uint32_t i = 0u; i < dst_nodes.size(); ++i) {
+			dstFile << dst_nodes[i].leftChild << " ";
+			dstFile << dst_nodes[i].rightNode << " ";
+			dstFile << std::setprecision(16) << dst_nodes[i].planes[0] << " ";
+			dstFile << std::setprecision(16) << dst_nodes[i].planes[1] << " \n\n";
+		}
+
+		for (uint32_t j = 0u; j < instances.size(); ++j) {
+			dstFile << instances[j] << " \n";
+		}
+	}
+	dstFile.close();
+	std::cout << "Nodes: " << dst_nodes.size() << std::endl;*/
+}
+
 
 float DSTree::getMaxElem(unsigned* indices_ptr, LiteMath::float3* vertices_ptr, unsigned current_scene_axis) {
 	float vert[3] = { vertices_ptr[indices_ptr[0u]][current_scene_axis],
@@ -627,45 +707,6 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 	size_t instances_info_size = instances_info.size();
 
 
-/*  ============  File input (TODO later)  ============  */
-
-	//std::cout << "Triangles: " << indices.size() / 3 << std::endl;
-	//std::cout << "Instances: " << instances_info_size << std::endl;
-	/*std::fstream dstFile;
-	dstFile.open("./dstree", std::fstream::in);
-	
-	if (dstFile.is_open() && !dstFile.eof()) {
-		std::cout << "There is a file" << std::endl;
-		dstFile >> scene_AABB.min.x;
-		dstFile >> scene_AABB.min.y;
-		dstFile >> scene_AABB.min.z;
-		dstFile >> scene_AABB.max.x;
-		dstFile >> scene_AABB.max.y;
-		dstFile >> scene_AABB.max.z;
-
-		uint32_t dst_size;
-		dstFile >> dst_size;
-
-		DSNode tempNode;
-		for (uint32_t j = 0u; j < dst_size; ++j) {
-			dstFile >> tempNode.leftChild;
-			dstFile >> tempNode.rightNode;
-			dstFile >> tempNode.planes[0];
-			dstFile >> tempNode.planes[1];
-
-			if (!dstFile.eof()) dst_nodes.push_back(tempNode);
-		}
-
-		for (uint32_t k = 0u; k < instances_size; ++k) {
-			dstFile >> instances[k];
-		}
-	}
-	if (!dst_nodes.size()) {
-		std::cout << "The file was empty" << std::endl;
-
-		dstFile.open("./dstree", std::fstream::out | std::fstream::trunc);*/
-
-
 	/*  ============  Upper Tree  ============  */
 	dst_nodes.clear();
 	instances.clear();
@@ -674,7 +715,7 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 		instances.push_back(instances.size());
 
 	dstBuilderRecurUpper(0u, instances_info_size - 1u);
-	std::cout << "Float3 size: " << sizeof(LiteMath::float3) << std::endl;
+	//might also save upper tree for visualization
 	upper_tree = dst_nodes;
 	dst_nodes.clear();
 	if (instances_info_size)
@@ -684,41 +725,15 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 	}
 
 	Visualizer dst_vis;
-	dst_vis.start();
 
-
-/*  ============  File output (TODO later)  ============  */
-	/*
-	size_t trNum = instances_info_size;
-	for (uint32_t i = 0u; i < instances_info_size; ++i)
-		trNum += (meshes[instances_info[i].geomID].lastIndID - meshes[instances_info[i].geomID].firstIndID);
-	std::cout << "Triangles: " << trNum << std::endl;
-	std::cout << "Upper tree: " << upper_tree.size() << "; Lower tree: " << lower_tree.size() << std::endl;
-	std::cout << "AABB min: " << scene_AABB.min.x << ", " << scene_AABB.min.y << ", " << scene_AABB.min.z << std::endl;
-	std::cout << "AABB max: " << scene_AABB.max.x << ", " << scene_AABB.max.y << ", " << scene_AABB.max.z << std::endl;*/
-
-		/*
-		dstFile << std::setprecision(16) << scene_AABB.min.x << " ";
-		dstFile << std::setprecision(16) << scene_AABB.min.y << " ";
-		dstFile << std::setprecision(16) << scene_AABB.min.z << " ";
-		dstFile << std::setprecision(16) << scene_AABB.max.x << " ";
-		dstFile << std::setprecision(16) << scene_AABB.max.y << " ";
-		dstFile << std::setprecision(16) << scene_AABB.max.z << " \n\n";
-		dstFile << dst_nodes.size() << " \n\n\n";
-
-		for (uint32_t i = 0u; i < dst_nodes.size(); ++i) {
-			dstFile << dst_nodes[i].leftChild << " ";
-			dstFile << dst_nodes[i].rightNode << " ";
-			dstFile << std::setprecision(16) << dst_nodes[i].planes[0] << " ";
-			dstFile << std::setprecision(16) << dst_nodes[i].planes[1] << " \n\n";
-		}
-
-		for (uint32_t j = 0u; j < instances.size(); ++j) {
-			dstFile << instances[j] << " \n";
-		}
+	for (unsigned i = 0u; i < meshes.size(); ++i) {
+		dst_vis.addMesh(vertices[meshes[i].firstVertID].M, (meshes[i].lastVertID - meshes[i].firstVertID + 1) * sizeof(float) * 3u, &(indices[3 * meshes[i].firstIndID]), (meshes[i].lastIndID - meshes[i].firstIndID + 1) * sizeof(unsigned) * 3u);
 	}
-	dstFile.close();
-	std::cout << "Nodes: " << dst_nodes.size() << std::endl;*/
+	for (unsigned i = 0u; i < instances.size(); ++i) {
+		dst_vis.addInstance(instances_info[i].geomID, instances_info[i].transf.m_col[0].M);
+	}
+
+	dst_vis.start();
 	return;
 }
 

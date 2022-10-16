@@ -17,15 +17,12 @@ struct DSNode {
 
 
 struct simpleDSTinfo {
-	bool is_leaf;
-	bool is_single_carve;
-	bool is_doulble_carve;
-	bool is_n1_pos;
-	bool is_n2_pos;
-	int plane1;
-	int plane2;
+	float p1, p2;
+	int p1ind, p2ind;
+	bool is_leaf, is_carve;
+	unsigned depth;
 };
-std::vector <simpleDSTinfo> carve_info;
+
 struct simpleAABB {
 	LiteMath::float3 min;
 	LiteMath::float3 max;
@@ -64,6 +61,11 @@ class DSTree : public ISceneObject {
 	std::vector <DSNode> lower_tree; //stores arrays of meshes' DST
 	std::vector <unsigned> instances; //temp array for builder; stores indices while sorting
 	std::vector <DSNode> dst_nodes; //temp array for builder; builder output
+
+
+/*  ============  File i/o  ============  */
+	void dst_input (char* path);
+	void dst_output(char* path);
 
 
 /* ================  Comparator functions  ================ */
