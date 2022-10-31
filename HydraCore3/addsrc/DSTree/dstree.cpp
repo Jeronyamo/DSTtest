@@ -727,7 +727,7 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 	Visualizer dst_vis;
 
 	for (unsigned i = 0u; i < meshes.size(); ++i) {
-		dst_vis.addMesh(vertices[meshes[i].firstVertID].M, (meshes[i].lastVertID - meshes[i].firstVertID + 1) * sizeof(float) * 3u, &(indices[3 * meshes[i].firstIndID]), (meshes[i].lastIndID - meshes[i].firstIndID + 1) * sizeof(unsigned) * 3u);
+		dst_vis.addMesh((float*) &(vertices[meshes[i].firstVertID]), (meshes[i].lastVertID - meshes[i].firstVertID + 1) * sizeof(float) * 3u, &(indices[3 * meshes[i].firstIndID]), (meshes[i].lastIndID - meshes[i].firstIndID + 1) * sizeof(unsigned) * 3u);
 	}
 	for (unsigned i = 0u; i < instances.size(); ++i) {
 		dst_vis.addInstance(instances_info[i].geomID, instances_info[i].transf.m_col[0].M);
