@@ -71,18 +71,13 @@ unsigned DSTree::AddGeom_Triangles3f(const float* a_vpos3f, size_t a_vertNumber,
 
 	tempInfo.lastIndID = indices.size() / 3 - 1;
 
-//tree
+//dual-split tree
 	meshes.push_back(tempInfo);
 	dst_nodes.clear();
 
 	dstBuilderRecur(0u, instances.size() - 1, SAH_MAX);
-	//read the tree form dst_nodes and save to tree_info[mesh_ind]
 
-	meshes[meshes.size() - 1].DSTreeOffset = lower_tree.size();
-	lower_tree.insert(lower_tree.end(), dst_nodes.begin(), dst_nodes.end());
-	std::cout << "Tree size: " << dst_nodes.size() << " nodes, " << dst_nodes.size() * sizeof(DSNode) << " bytes ~ <" << (dst_nodes.size() >> 6) + 1u * unsigned((dst_nodes.size() & 63u) != 0u) << " KB" << std::endl;
-	dst_nodes.clear();
-
+//mesh AABB
 	meshes[meshes.size() - 1].meshAABB = getAABB(0, &vertices.at(tempInfo.firstVertID), a_triIndices);
 	for (uint32_t j = 1; j < instances.size(); ++j) {
 		meshes[meshes.size() - 1].meshAABB = mergeAABB(j, meshes[meshes.size() - 1].meshAABB, &vertices.at(tempInfo.firstVertID), a_triIndices);
@@ -94,6 +89,15 @@ unsigned DSTree::AddGeom_Triangles3f(const float* a_vpos3f, size_t a_vertNumber,
 			meshes[meshes.size() - 1].meshAABB.max[i] += AABBeps;
 		}
 	}
+
+	//read the tree form dst_nodes and save to tree_info[mesh_ind]
+	treeVisInfo();
+	meshes[meshes.size() - 1].DSTreeOffset = lower_tree.size();
+	lower_tree.insert(lower_tree.end(), dst_nodes.begin(), dst_nodes.end());
+	//if (meshes.size() - 1 == 2)
+	//	std::cout << tree_info[2].size() << std::endl;
+	std::cout << "Tree size: " << dst_nodes.size() << " nodes, " << dst_nodes.size() * sizeof(DSNode) << " bytes ~ <" << (dst_nodes.size() >> 6) + 1u * unsigned((dst_nodes.size() & 63u) != 0u) << " KB" << std::endl;
+	dst_nodes.clear();
 
 	for (size_t j = 0; j < instances.size(); ++j) {
 		indices_sorted.push_back(instances[j]);
@@ -805,13 +809,16 @@ CRT_Hit DSTree::traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direct
 	}
 	return tempHitInfo;
 }
-
+						/*
+						unsigned glob_trigs = 0, glob_nodes = 0, glob2_trigs = 0u, glob2_nodes = 0u;
+						unsigned buf_nodes = 0, buf_trigs = 0, pixel = 1;
+						*/
 CRT_Hit DSTree::RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar) {
 	uint32_t *insts = new uint32_t[instances_info.size()];
 	uint32_t num_insts = findInstHit(posAndNear, dirAndFar, insts);
 
 	CRT_Hit temp_hit{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
-
+						//buf_nodes = 0, buf_trigs = 0;
 	for (uint32_t i = 0u; i < num_insts; ++i) {
 		//current_instance = insts[i];
 		//if (dirAndFar.w > temp_hit.t) dirAndFar.w = temp_hit.t;
@@ -823,7 +830,22 @@ CRT_Hit DSTree::RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float
 		if (instHit.t < temp_hit.t)
 			temp_hit = instHit;
 	}
-
+						/*
+						if (buf_nodes > glob_nodes) {
+							glob_nodes = buf_nodes;
+							glob_trigs = buf_trigs;
+						}
+						if (buf_trigs > glob2_trigs) {
+							glob2_nodes = buf_nodes;
+							glob2_trigs = buf_trigs;
+						}
+						
+						pixel += 1;
+						if (pixel == 128 * 128) {
+							std::cout << "Total1: " << glob_nodes << ", " << glob_trigs << std::endl;
+							std::cout << "Total2: " << glob2_nodes << ", " << glob2_trigs << std::endl;
+						}
+						*/
 	delete[] insts;
 	return temp_hit;
 }
@@ -1006,7 +1028,7 @@ uint32_t DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAn
 CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance, float triang_t) {
 	simpleInstance tempInst = instances_info[current_instance];
 	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
-
+								//unsigned count_nodes = 0u, count_trigs = 0u;
 	LiteMath::float3 position = tempInst.transfInv * LiteMath::float3(posAndNear.x, posAndNear.y, posAndNear.z);
 	LiteMath::float4 temp_direction = LiteMath::mul4x4x4(tempInst.transfInv, LiteMath::float4(dirAndFar.x, dirAndFar.y, dirAndFar.z, 0.f));
 	LiteMath::float3 direction{ temp_direction.x, temp_direction.y, temp_direction.z };
@@ -1054,7 +1076,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 				if (isFin[planes.x]) t[0] = invDir[planes.x] * (curr_node.planes[0u] - position[planes.x]);
 				if (isFin[planes.y]) t[1] = invDir[planes.y] * (curr_node.planes[1u] - position[planes.y]);
-
+								//count_nodes += 1;
 				if (!IS_CARVING_NODE) {
 					bool is_min_left = direction[planes.x] < 0.f;
 					travStack t_info[2] = { travInfo, travInfo };
@@ -1161,6 +1183,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 			if (max_node_tr_index > tree_tr_num) max_node_tr_index = tree_tr_num;
 
 			for (unsigned j = curr_node.leftChild; j < max_node_tr_index; ++j) {
+								//count_trigs += 1;
 				CRT_Hit temp_t = traceTriangle(position, direction, tempVertices, &(tempIndices[3 * tempIndicesSorted[j]]));
 				if (temp_t.t < temp_hit.t && temp_t.t >= 0.f) {
 					temp_hit = temp_t;
@@ -1173,8 +1196,114 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 		}
 
 	} while (travInfo.node);
-
+								//buf_nodes += count_nodes, buf_trigs += count_trigs;
 	return temp_hit;
+}
+
+void DSTree::treeVisInfo() {
+	std::vector <unsigned> splitNodesDepthStack;
+	std::vector <std::vector <float>> AABB_diags;
+	simpleDSTinfo *info = new simpleDSTinfo[dst_nodes.size()];
+	simpleAABB thisAABB = meshes[meshes.size() - 1].meshAABB;
+	float curr_diag[8] = { thisAABB.min.x, thisAABB.min.y, thisAABB.min.z, -1.f,
+						   thisAABB.max.x, thisAABB.max.y, thisAABB.max.z, -1.f }; //will be interpreted as GL_LINE (vec4, vec4)
+
+	unsigned depth = 0u;
+	for (unsigned node = 0u; node < dst_nodes.size(); ++node) {
+		info[node].depth = depth;
+		info[node].p1 = dst_nodes[node].planes[0];
+		info[node].p2 = dst_nodes[node].planes[1];
+		info[node].is_leaf  = dst_nodes[node].leftChild & 1u;
+		info[node].is_carve = dst_nodes[node].leftChild & 2u;
+		info[node].is_1max = !info[node].is_carve;
+		info[node].is_2max =  info[node].is_carve;
+		info[node].p1axis = (dst_nodes[node].leftChild >> 2) & 3u;
+		info[node].p2axis = info[node].p1axis;
+
+		bool is_double = !((dst_nodes[node].leftChild & 48u) == 32u) && info[node].is_carve;
+		bool is_split = !(info[node].is_leaf || info[node].is_carve);
+		if (is_double) {
+			info[node].is_1max = bool(info[node].p1axis & 2u);
+			info[node].is_2max = bool(info[node].p1axis & 1u);
+			info[node].p1axis = (dst_nodes[node].leftChild >> 5) & 1u;
+			info[node].p2axis = ((dst_nodes[node].leftChild >> 4) & 1u) + 1u;
+		}
+
+		if (depth >= AABB_diags.size()) {
+			std::vector <float> tmp;
+			AABB_diags.push_back(tmp);
+		}
+
+		//ADD AABB DIAGONAL + ADDITIONAL INFO --> AABB_diags
+		if (is_split) {
+			float new_diag[8] = { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3], curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] };
+
+			curr_diag[3] = 0.f;
+			curr_diag[4 + info[node].p1axis] = info[node].p1;
+			curr_diag[7] = info[node].p1axis;
+			AABB_diags[depth].insert(AABB_diags[depth].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
+																curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
+
+			new_diag[3] = 1.f;
+			new_diag[info[node].p2axis] = info[node].p2;
+			new_diag[7] = info[node].p2axis;
+			AABB_diags[depth].insert(AABB_diags[depth].end(), { new_diag[0], new_diag[1], new_diag[2], new_diag[3],
+																new_diag[4], new_diag[5], new_diag[6], new_diag[7] });
+		}
+		if (info[node].is_carve) {
+			curr_diag[3] = 2.f;
+			curr_diag[7] = info[node].p1axis;
+			if (is_double) {
+				curr_diag[3] = 3.f;
+				curr_diag[7] = info[node].is_2max + 2 * info[node].is_1max + 4 * info[node].p2axis + 16 * info[node].p1axis;
+				/*std::cout << (info[node].is_2max + 2 * info[node].is_1max + 4 * info[node].p2axis + 16 * info[node].p1axis) << ", " << curr_diag[7] << std::endl;
+				int temp = int(curr_diag[7]);
+				std::cout << info[node].is_2max << ", " << (temp & 1) << std::endl;
+				std::cout << info[node].is_1max << ", " << ((temp >> 1) & 1) << std::endl;
+				std::cout << info[node].p2axis << ", " << ((temp >> 2) & 3) << std::endl;
+				std::cout << info[node].p1axis << ", " << ((temp >> 4) & 3) << std::endl;*/
+			}
+
+			curr_diag[4 * info[node].is_1max + info[node].p1axis] = info[node].p1;
+			curr_diag[4 * info[node].is_2max + info[node].p2axis] = info[node].p2;
+			AABB_diags[depth].insert(AABB_diags[depth].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
+																curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
+
+		}
+
+
+		if (info[node].is_leaf && splitNodesDepthStack.size()) {
+			depth = *splitNodesDepthStack.rbegin();
+			splitNodesDepthStack.pop_back();
+		}
+		if (is_split)
+			splitNodesDepthStack.push_back(depth);
+		depth += 1;
+	}
+
+	delete[] info;
+
+	std::vector <float> tmp;
+	tree_info.push_back(tmp);
+
+	if (AABB_diags.size() == 1 && AABB_diags[0].size() == 0)
+		AABB_diags[0].insert(AABB_diags[0].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
+													curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
+
+		//std::cout << AABB_diags.size() << std::endl;
+		//std::cout << tree_info.size() << std::endl;
+		//std::cout << tree_info[tree_info.size() - 1].size() << std::endl;
+	for (std::vector <std::vector <float>>::iterator layer = AABB_diags.begin(); layer < AABB_diags.end(); ++layer) {
+		//if (tree_info.size() == 3)
+		//	for (std::vector <float>::iterator ll = layer->begin(); ll < layer->end(); ++ll)
+		//		std::cout << *ll << std::endl;
+		tree_info.back().insert(tree_info.back().end(), layer->begin(), layer->end());
+		//if (tree_info.size() == 3)
+		//	tree_info.back().size();
+	}
+		//std::cout << AABB_diags.size() << std::endl;
+		//std::cout << tree_info.size() << std::endl;
+		//std::cout << tree_info[tree_info.size() - 1].size() << std::endl;
 }
 
 

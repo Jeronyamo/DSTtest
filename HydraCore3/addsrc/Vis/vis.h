@@ -10,16 +10,15 @@
 
 class Visualizer {
 	struct VisIvec2 { 
-		int v[2];
+		GLuint v[2];
 
-		int& operator[](int ind) { return v[ind]; }
+		GLuint& operator[](GLuint ind) { return v[ind]; }
 	};
 
 	struct VisMesh {
-		VisIvec2 triVAO;
-		GLuint triVBO, triIBO;
-		std::vector <VisIvec2> treeVAOs; //[0] - buffers for tree layers (squares/boxes); [1] - number of elements (indices) for glDrawElements()
-		std::vector <GLuint> treeVBOs;
+		VisIvec2 triVAO; //[0] - buffers for tree layers (squares/boxes); [1] - number of elements (indices) for glDrawElements()
+		GLuint triVBO, triIBO, treeVAO;
+		std::vector <VisIvec2> treeVBOs;
 	};
 
 	struct VisInstance {
@@ -34,6 +33,8 @@ class Visualizer {
 	GLuint triProg = 0u, boxProg = 0u;// , lineProg = 0u;
 	std::vector <VisMesh> meshes;
 	std::vector <VisInstance> instances;
+	std::vector <std::vector <float>>* tree_buffer;
+	std::vector <std::vector <unsigned>>* layers_indices;
 	ImGuiIO imgui_io;
 
 
@@ -50,9 +51,9 @@ public:
 	Visualizer();
 	~Visualizer();
 
-	unsigned addMesh(float* tri_buf, size_t tri_buf_size_bytes,
-					 unsigned* tri_ind_buf, size_t tri_ind_buf_size_bytes,
-					 std::vector <float> *tree_buf = nullptr);
+	unsigned addMesh(float*     tri_buf, size_t     tri_buf_size_bytes,
+				  unsigned* tri_ind_buf, size_t tri_ind_buf_size_bytes);
+	void addTree(std::vector <std::vector <float>>* tree_buf, std::vector <std::vector <unsigned>>* layers_inds);
 	void addInstance(unsigned mesh_id, float* matrix);
 	void start();
 };

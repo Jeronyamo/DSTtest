@@ -18,8 +18,8 @@ struct DSNode {
 
 struct simpleDSTinfo {
 	float p1, p2;
-	int p1ind, p2ind;
-	bool is_leaf, is_carve;
+	int p1axis, p2axis;
+	bool is_1max, is_2max, is_leaf, is_carve;
 	unsigned depth;
 };
 
@@ -57,10 +57,12 @@ class DSTree : public ISceneObject {
 	std::vector <simpleMeshInfo> meshes;
 	std::vector <simpleInstance> instances_info;
 
-	std::vector <DSNode> upper_tree; //leaves contain instances' indices
-	std::vector <DSNode> lower_tree; //stores arrays of meshes' DST
+	std::vector <DSNode> upper_tree;  //leaves contain instances' indices
+	std::vector <DSNode> lower_tree;  //stores arrays of meshes' DST
 	std::vector <unsigned> instances; //temp array for builder; stores indices while sorting
-	std::vector <DSNode> dst_nodes; //temp array for builder; builder output
+	std::vector <DSNode> dst_nodes;   //temp array for builder; builder output
+	std::vector <std::vector <float>> tree_info; // DS trees info [mesh][tree layer]
+	std::vector <std::vector <unsigned>> layers_info; // DS trees info [mesh][tree layer]
 
 
 /*  ============  File i/o  ============  */
@@ -112,6 +114,7 @@ class DSTree : public ISceneObject {
 	bool traceAABB(const simpleAABB& tempAABB, LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float3 InvDir, LiteMath::float2& tMinMax);
 	CRT_Hit traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direction, LiteMath::float3* tempVertices, unsigned* tempInsices);
 	CRT_Hit findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance, float triang_t);
+	void treeVisInfo();
 	uint32_t findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, uint32_t* insts);
 
 public:

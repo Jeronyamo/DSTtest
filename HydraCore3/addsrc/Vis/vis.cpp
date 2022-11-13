@@ -60,7 +60,7 @@ void mouseCallback(GLFWwindow* window, int button, int action, int mods) {
 	}
 	if ((button == GLFW_MOUSE_BUTTON_LEFT || button == GLFW_MOUSE_BUTTON_RIGHT || button == GLFW_MOUSE_BUTTON_MIDDLE)
 		&& action == GLFW_RELEASE) {
-		
+
 		if (button == GLFW_MOUSE_BUTTON_LEFT)
 			mouse.LMB = false;
 		if (button == GLFW_MOUSE_BUTTON_RIGHT)
@@ -95,11 +95,12 @@ void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos) {
 			camera.pitch = 3.1415f * 0.49f;
 		if (camera.pitch <= 3.1415f * -0.49f)
 			camera.pitch = 3.1415f * -0.49f;
-
-		if (camera.yaw >= 360.0f)
-			camera.yaw -= 360.f;
-		if (camera.yaw < -360.0f)
-			camera.yaw += 360.0f;
+		if (camera.yaw <= -3.1415f * 2.f || camera.yaw >= 3.1415f * 2.f)
+			camera.yaw = 0.f;
+		//if (camera.yaw >= 360.0f)
+		//	camera.yaw -= 360.f;
+		//if (camera.yaw < -360.0f)
+		//	camera.yaw += 360.0f;
 
 		glfwSetCursorPos(window, mouse.xpos, mouse.ypos);
 		camera.update = true;
@@ -119,12 +120,14 @@ void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos) {
 }
 
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
-	proj.fov_deg -= (float)yoffset;
-	if (proj.fov_deg < 10.0f)
-		proj.fov_deg = 10.0f;
-	if (proj.fov_deg > 65.0f)
-		proj.fov_deg = 65.0f;
-	proj.update = true;
+	if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
+		proj.fov_deg -= (float)yoffset;
+		if (proj.fov_deg < 10.0f)
+			proj.fov_deg = 10.0f;
+		if (proj.fov_deg > 65.0f)
+			proj.fov_deg = 65.0f;
+		proj.update = true;
+	}
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -175,7 +178,7 @@ Visualizer::Visualizer() {
 
 	glAttachShader(triProg, triVert); GL_CHECK_ERRORS;
 	glAttachShader(triProg, triFrag); GL_CHECK_ERRORS;
-	glLinkProgram(triProg); GL_CHECK_ERRORS;
+	glLinkProgram (triProg); GL_CHECK_ERRORS;
 
 	glDeleteShader(triVert); GL_CHECK_ERRORS;
 	glDeleteShader(triFrag); GL_CHECK_ERRORS;
@@ -188,7 +191,34 @@ Visualizer::~Visualizer() {
 }
 
 
-unsigned Visualizer::addMesh(float* tri_buf, size_t tri_buf_size_bytes, unsigned *tri_ind_buf, size_t tri_ind_buf_size_bytes, std::vector <float> *tree_buf) {
+void Visualizer::addTree(std::vector <std::vector <float>>* tree_buf, std::vector <std::vector <unsigned>>* layers_inds) {
+	tree_buffer = tree_buf;
+	layers_indices = layers_inds;
+
+	boxProg = glCreateProgram();
+	GLuint treeVert = create_shader_from_file(GL_VERTEX_SHADER, "./shaders/treeVert.glsl"); GL_CHECK_ERRORS;
+	GLuint treeGeom = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeGeom.glsl"); GL_CHECK_ERRORS;
+	GLuint treeFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeFrag.glsl"); GL_CHECK_ERRORS;
+
+	glAttachShader(boxProg, treeVert); GL_CHECK_ERRORS;
+	glAttachShader(boxProg, treeGeom); GL_CHECK_ERRORS;
+	glAttachShader(boxProg, treeFrag); GL_CHECK_ERRORS;
+	glLinkProgram (boxProg); GL_CHECK_ERRORS;
+
+	glDeleteShader(treeVert); GL_CHECK_ERRORS;
+	glDeleteShader(treeGeom); GL_CHECK_ERRORS;
+	glDeleteShader(treeFrag); GL_CHECK_ERRORS;
+
+		//CONTINUE HERE - LOAD DUAL-SPLIT TREE
+		//CREATE ONE BUFFER AND MANY VAO's FOR DIFFERENT PARTS OF IT!!!
+	GLuint VAO = create_array();
+	for (unsigned i = 0u; i < tree_buffer->size(); ++i) {
+		GLuint VBO = create_buffer(GL_ARRAY_BUFFER, tree_buf[i].data(), tree_buf[i].size() * sizeof(float), GL_STATIC_DRAW);
+		
+	}
+}
+
+unsigned Visualizer::addMesh(float* tri_buf, size_t tri_buf_size_bytes, unsigned *tri_ind_buf, size_t tri_ind_buf_size_bytes) {
 	VisMesh new_mesh;
 
 	new_mesh.triVAO[0] = create_array();
@@ -205,13 +235,6 @@ unsigned Visualizer::addMesh(float* tri_buf, size_t tri_buf_size_bytes, unsigned
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0); GL_CHECK_ERRORS;
-	/*
-	for (unsigned i = 0u; i < tree_buf.size(); ++i) {
-		GLuint VAO = create_array();
-		GLuint VBO = create_buffer(GL_ARRAY_BUFFER, tree_buf[i].data(), tree_buf[i].size() * sizeof(float), GL_STATIC_DRAW);
-		//CONTINUE HERE - LOAD DUAL-SPLIT TREE
-	}
-	*/
 
 	meshes.push_back(new_mesh);
 	return meshes.size() - 1;
@@ -382,7 +405,7 @@ void Visualizer::start() {
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		}
-		
+
 		glfwSwapBuffers(window);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
@@ -438,7 +461,7 @@ void VisCamera::LookAtUpd() {
 	V[4] =       s.y;
 	V[8] =       s.z;
 	V[12] = -dots[0];
-	
+
 	V[1] =       u.x;
 	V[5] =       u.y;
 	V[9] =       u.z;
