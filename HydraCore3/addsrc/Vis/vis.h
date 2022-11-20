@@ -41,7 +41,7 @@ class Visualizer {
 	GLuint create_buffer(GLenum buffer_type = GL_ARRAY_BUFFER, void *buffer_data = nullptr, size_t buf_size_bytes = 0, GLenum draw_type = GL_STATIC_DRAW, bool bind = false, GLuint bind_index = 0);
 	GLuint create_array();
 	GLuint create_shader_from_file(GLenum shader_type, const char* shader_path);
-	GLuint create_shader(GLenum shader_type, char *shader, bool path_to_file);
+	GLuint create_shader(GLenum shader_type, char *shader);
 
 	char *read_file(const char *path);
 	int link_program(GLuint program);

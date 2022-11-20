@@ -171,7 +171,8 @@ Visualizer::Visualizer() {
 	glViewport(0, 0, fb_width, fb_height);
 	//glEnable(GL_CULL_FACE); GL_CHECK_ERRORS;
 
-	//load shaders here
+	//load shaders here:
+	// for meshes
 	triProg = glCreateProgram();
 	GLuint triVert = create_shader_from_file(  GL_VERTEX_SHADER, "./shaders/triVert.glsl"); GL_CHECK_ERRORS;
 	GLuint triFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/triFrag.glsl"); GL_CHECK_ERRORS;
@@ -182,6 +183,34 @@ Visualizer::Visualizer() {
 
 	glDeleteShader(triVert); GL_CHECK_ERRORS;
 	glDeleteShader(triFrag); GL_CHECK_ERRORS;
+
+
+	// for DST
+	boxProg = glCreateProgram(); GL_CHECK_ERRORS;
+	GLuint treeVert = create_shader_from_file(GL_VERTEX_SHADER, "./shaders/treeVert.glsl"); GL_CHECK_ERRORS;
+	GLuint treeGeom = create_shader_from_file(GL_GEOMETRY_SHADER, "./shaders/treeGeom.glsl"); GL_CHECK_ERRORS;
+	GLuint treeFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeFrag.glsl"); GL_CHECK_ERRORS;
+	glAttachShader(boxProg, treeVert); GL_CHECK_ERRORS;
+	glAttachShader(boxProg, treeFrag); GL_CHECK_ERRORS;
+	glAttachShader(boxProg, treeGeom); GL_CHECK_ERRORS;
+
+
+	//std::cout << "BEGIN" << std::endl;
+	glLinkProgram(boxProg);
+	GLint success = 0u;
+	glGetProgramiv(boxProg, GL_LINK_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetProgramInfoLog(boxProg, 512, NULL, infoLog);
+		std::cout << "ERROR:: Program link error occured:" << std::endl;
+		std::cout << infoLog << std::endl;
+	}
+	//std::cout << "END" << std::endl;
+
+
+	glDeleteShader(treeVert); GL_CHECK_ERRORS;
+	glDeleteShader(treeGeom); GL_CHECK_ERRORS;
+	glDeleteShader(treeFrag); GL_CHECK_ERRORS;
 }
 
 
@@ -194,20 +223,6 @@ Visualizer::~Visualizer() {
 void Visualizer::addTree(std::vector <std::vector <float>>* tree_buf, std::vector <std::vector <unsigned>>* layers_inds) {
 	tree_buffer = tree_buf;
 	layers_indices = layers_inds;
-
-	boxProg = glCreateProgram();
-	GLuint treeVert = create_shader_from_file(GL_VERTEX_SHADER, "./shaders/treeVert.glsl"); GL_CHECK_ERRORS;
-	GLuint treeGeom = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeGeom.glsl"); GL_CHECK_ERRORS;
-	GLuint treeFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeFrag.glsl"); GL_CHECK_ERRORS;
-
-	glAttachShader(boxProg, treeVert); GL_CHECK_ERRORS;
-	glAttachShader(boxProg, treeGeom); GL_CHECK_ERRORS;
-	glAttachShader(boxProg, treeFrag); GL_CHECK_ERRORS;
-	glLinkProgram (boxProg); GL_CHECK_ERRORS;
-
-	glDeleteShader(treeVert); GL_CHECK_ERRORS;
-	glDeleteShader(treeGeom); GL_CHECK_ERRORS;
-	glDeleteShader(treeFrag); GL_CHECK_ERRORS;
 
 		//CONTINUE HERE - LOAD DUAL-SPLIT TREE
 		//CREATE ONE BUFFER AND MANY VAO's FOR DIFFERENT PARTS OF IT!!!
@@ -301,12 +316,14 @@ char* Visualizer::read_file(const char* path) {
 }
 
 GLuint Visualizer::create_shader_from_file(GLenum shader_type, const char* shader_path) {
-	return create_shader(shader_type, read_file(shader_path), false);
+	char* file = read_file(shader_path);
+	GLuint shader = create_shader(shader_type, file);
+	delete[] file;
+	return shader;
 }
 
-GLuint Visualizer::create_shader(GLenum shader_type, char* shader_inp, bool path_to_file) {
+GLuint Visualizer::create_shader(GLenum shader_type, char* shader_inp) {
 	char *shader = shader_inp;
-	if (path_to_file) shader = read_file(shader_inp);
 
 
 	GLuint shader_obj = glCreateShader(shader_type);
@@ -354,7 +371,6 @@ void Visualizer::ImGUI_initialization() {
 
 void Visualizer::start() {
 	ImGUI_initialization();
-
 	ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 	unsigned num_meshes = instances.size();
 	bool *active_meshes = new bool[num_meshes];
@@ -362,7 +378,7 @@ void Visualizer::start() {
 		active_meshes[i] = false;
 
 	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); GL_CHECK_ERRORS;
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();

@@ -1256,25 +1256,20 @@ void DSTree::treeVisInfo() {
 			if (is_double) {
 				curr_diag[3] = 3.f;
 				curr_diag[7] = info[node].is_2max + 2 * info[node].is_1max + 4 * info[node].p2axis + 16 * info[node].p1axis;
-				/*std::cout << (info[node].is_2max + 2 * info[node].is_1max + 4 * info[node].p2axis + 16 * info[node].p1axis) << ", " << curr_diag[7] << std::endl;
-				int temp = int(curr_diag[7]);
-				std::cout << info[node].is_2max << ", " << (temp & 1) << std::endl;
-				std::cout << info[node].is_1max << ", " << ((temp >> 1) & 1) << std::endl;
-				std::cout << info[node].p2axis << ", " << ((temp >> 2) & 3) << std::endl;
-				std::cout << info[node].p1axis << ", " << ((temp >> 4) & 3) << std::endl;*/
 			}
 
 			curr_diag[4 * info[node].is_1max + info[node].p1axis] = info[node].p1;
 			curr_diag[4 * info[node].is_2max + info[node].p2axis] = info[node].p2;
 			AABB_diags[depth].insert(AABB_diags[depth].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
 																curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
-
 		}
-
 
 		if (info[node].is_leaf && splitNodesDepthStack.size()) {
 			depth = *splitNodesDepthStack.rbegin();
 			splitNodesDepthStack.pop_back();
+			for (unsigned i = 0; i < 8; ++i) {
+				curr_diag[i] = AABB_diags[depth][AABB_diags[depth].size() - 8 + i];
+			}
 		}
 		if (is_split)
 			splitNodesDepthStack.push_back(depth);
@@ -1290,20 +1285,9 @@ void DSTree::treeVisInfo() {
 		AABB_diags[0].insert(AABB_diags[0].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
 													curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
 
-		//std::cout << AABB_diags.size() << std::endl;
-		//std::cout << tree_info.size() << std::endl;
-		//std::cout << tree_info[tree_info.size() - 1].size() << std::endl;
 	for (std::vector <std::vector <float>>::iterator layer = AABB_diags.begin(); layer < AABB_diags.end(); ++layer) {
-		//if (tree_info.size() == 3)
-		//	for (std::vector <float>::iterator ll = layer->begin(); ll < layer->end(); ++ll)
-		//		std::cout << *ll << std::endl;
 		tree_info.back().insert(tree_info.back().end(), layer->begin(), layer->end());
-		//if (tree_info.size() == 3)
-		//	tree_info.back().size();
 	}
-		//std::cout << AABB_diags.size() << std::endl;
-		//std::cout << tree_info.size() << std::endl;
-		//std::cout << tree_info[tree_info.size() - 1].size() << std::endl;
 }
 
 
