@@ -28,11 +28,17 @@ class Visualizer {
 		unsigned min, max; //tree layers range to visualize
 	};
 
+	struct VisDSTree {
+		GLuint VBO;
+		std::vector <unsigned> *layers_indices;
+	};
+
 
 	GLFWwindow *window = nullptr;
-	GLuint triProg = 0u, boxProg = 0u;// , lineProg = 0u;
+	GLuint triProg = 0u, boxProg = 0u, treeVAO = 0u;
 	std::vector <VisMesh> meshes;
 	std::vector <VisInstance> instances;
+	std::vector <VisDSTree> tree_info;
 	std::vector <std::vector <float>>* tree_buffer;
 	std::vector <std::vector <unsigned>>* layers_indices;
 	ImGuiIO imgui_io;

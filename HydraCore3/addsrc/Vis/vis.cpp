@@ -97,10 +97,6 @@ void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos) {
 			camera.pitch = 3.1415f * -0.49f;
 		if (camera.yaw <= -3.1415f * 2.f || camera.yaw >= 3.1415f * 2.f)
 			camera.yaw = 0.f;
-		//if (camera.yaw >= 360.0f)
-		//	camera.yaw -= 360.f;
-		//if (camera.yaw < -360.0f)
-		//	camera.yaw += 360.0f;
 
 		glfwSetCursorPos(window, mouse.xpos, mouse.ypos);
 		camera.update = true;
@@ -174,42 +170,30 @@ Visualizer::Visualizer() {
 	//load shaders here:
 	// for meshes
 	triProg = glCreateProgram();
-	GLuint triVert = create_shader_from_file(  GL_VERTEX_SHADER, "./shaders/triVert.glsl"); GL_CHECK_ERRORS;
-	GLuint triFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/triFrag.glsl"); GL_CHECK_ERRORS;
+	GLuint triVert = create_shader_from_file(  GL_VERTEX_SHADER, "./shaders/triVert.glsl");
+	GLuint triFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/triFrag.glsl");
 
-	glAttachShader(triProg, triVert); GL_CHECK_ERRORS;
-	glAttachShader(triProg, triFrag); GL_CHECK_ERRORS;
-	glLinkProgram (triProg); GL_CHECK_ERRORS;
+	glAttachShader(triProg, triVert);
+	glAttachShader(triProg, triFrag);
+	glLinkProgram (triProg);
 
-	glDeleteShader(triVert); GL_CHECK_ERRORS;
+	glDeleteShader(triVert);
 	glDeleteShader(triFrag); GL_CHECK_ERRORS;
 
 
 	// for DST
-	boxProg = glCreateProgram(); GL_CHECK_ERRORS;
-	GLuint treeVert = create_shader_from_file(GL_VERTEX_SHADER, "./shaders/treeVert.glsl"); GL_CHECK_ERRORS;
-	GLuint treeGeom = create_shader_from_file(GL_GEOMETRY_SHADER, "./shaders/treeGeom.glsl"); GL_CHECK_ERRORS;
-	GLuint treeFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeFrag.glsl"); GL_CHECK_ERRORS;
-	glAttachShader(boxProg, treeVert); GL_CHECK_ERRORS;
-	glAttachShader(boxProg, treeFrag); GL_CHECK_ERRORS;
-	glAttachShader(boxProg, treeGeom); GL_CHECK_ERRORS;
+	boxProg = glCreateProgram();
+	GLuint treeVert = create_shader_from_file(  GL_VERTEX_SHADER, "./shaders/treeVert.glsl");
+	GLuint treeGeom = create_shader_from_file(GL_GEOMETRY_SHADER, "./shaders/treeGeom.glsl");
+	GLuint treeFrag = create_shader_from_file(GL_FRAGMENT_SHADER, "./shaders/treeFrag.glsl");
 
-
-	//std::cout << "BEGIN" << std::endl;
+	glAttachShader(boxProg, treeVert);
+	glAttachShader(boxProg, treeFrag);
+	glAttachShader(boxProg, treeGeom);
 	glLinkProgram(boxProg);
-	GLint success = 0u;
-	glGetProgramiv(boxProg, GL_LINK_STATUS, &success);
-	if (!success) {
-		char infoLog[512];
-		glGetProgramInfoLog(boxProg, 512, NULL, infoLog);
-		std::cout << "ERROR:: Program link error occured:" << std::endl;
-		std::cout << infoLog << std::endl;
-	}
-	//std::cout << "END" << std::endl;
 
-
-	glDeleteShader(treeVert); GL_CHECK_ERRORS;
-	glDeleteShader(treeGeom); GL_CHECK_ERRORS;
+	glDeleteShader(treeVert);
+	glDeleteShader(treeGeom);
 	glDeleteShader(treeFrag); GL_CHECK_ERRORS;
 }
 
@@ -224,12 +208,17 @@ void Visualizer::addTree(std::vector <std::vector <float>>* tree_buf, std::vecto
 	tree_buffer = tree_buf;
 	layers_indices = layers_inds;
 
-		//CONTINUE HERE - LOAD DUAL-SPLIT TREE
-		//CREATE ONE BUFFER AND MANY VAO's FOR DIFFERENT PARTS OF IT!!!
 	GLuint VAO = create_array();
-	for (unsigned i = 0u; i < tree_buffer->size(); ++i) {
-		GLuint VBO = create_buffer(GL_ARRAY_BUFFER, tree_buf[i].data(), tree_buf[i].size() * sizeof(float), GL_STATIC_DRAW);
-		
+
+	glBindVertexArray(VAO);
+	glEnableVertexAttribArray(0);
+	glBindVertexArray(0); GL_CHECK_ERRORS;
+	treeVAO = VAO;
+
+	for (unsigned i = 0u; i < tree_buf->size(); ++i) {
+		tree_info.emplace_back();
+		tree_info.back().VBO = create_buffer(GL_ARRAY_BUFFER, tree_buf->at(i).data(), tree_buf->at(i).size() * sizeof(float), GL_STATIC_DRAW);
+		tree_info.back().layers_indices = &layers_inds->at(i);
 	}
 }
 
@@ -325,7 +314,6 @@ GLuint Visualizer::create_shader_from_file(GLenum shader_type, const char* shade
 GLuint Visualizer::create_shader(GLenum shader_type, char* shader_inp) {
 	char *shader = shader_inp;
 
-
 	GLuint shader_obj = glCreateShader(shader_type);
 	glShaderSource(shader_obj, 1, &shader, NULL);
 	glCompileShader(shader_obj); GL_CHECK_ERRORS;
@@ -378,7 +366,6 @@ void Visualizer::start() {
 		active_meshes[i] = false;
 
 	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); GL_CHECK_ERRORS;
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
@@ -388,8 +375,8 @@ void Visualizer::start() {
 		{
 			glUseProgram(triProg); GL_CHECK_ERRORS;
 
-			glUniformMatrix4fv(glGetUniformLocation(triProg, "P"), 1, false, proj.P); GL_CHECK_ERRORS;
-			glUniformMatrix4fv(glGetUniformLocation(triProg, "V"), 1, false, camera.V); GL_CHECK_ERRORS;
+			glUniformMatrix4fv(glGetUniformLocation(triProg, "P"), 1, false, proj.P);
+			glUniformMatrix4fv(glGetUniformLocation(triProg, "V"), 1, false, camera.V);
 			for (unsigned i = 0u; i < num_meshes; ++i) {
 				if (active_meshes[i]) {
 					VisIvec2 tmpVAO{ meshes[instances[i].mesh].triVAO[0], meshes[instances[i].mesh].triVAO[1] };
@@ -400,7 +387,35 @@ void Visualizer::start() {
 				}
 			}
 
-			glUseProgram(0);
+			glUseProgram(0); GL_CHECK_ERRORS;
+		}
+		{
+			glUseProgram(boxProg); GL_CHECK_ERRORS;
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glUniformMatrix4fv(glGetUniformLocation(boxProg, "P"), 1, false, proj.P);
+			glUniformMatrix4fv(glGetUniformLocation(boxProg, "V"), 1, false, camera.V);
+
+			for (unsigned i = 0u; i < num_meshes; ++i) {
+				if (active_meshes[i]) {
+					VisDSTree tmp = tree_info[instances[i].mesh];
+
+					glUniformMatrix4fv(glGetUniformLocation(boxProg, "M"), 1, false, instances[i].M);
+					glBindVertexArray(treeVAO);
+					glBindBuffer(GL_ARRAY_BUFFER, tmp.VBO);
+					glVertexAttribPointer(0, 4,	GL_FLOAT, GL_FALSE,	4 * sizeof(float), nullptr);
+
+					for (unsigned j = 0u; j < tmp.layers_indices->size() - 1; ++j) {
+						glDrawArrays(GL_LINES, tmp.layers_indices->at(j), (tmp.layers_indices->at(j + 1) - tmp.layers_indices->at(j)) >> 2);
+					}
+
+					glBindVertexArray(0);
+				}
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+			glUseProgram(0); GL_CHECK_ERRORS;
 		}
 		{
 			ImGui_ImplOpenGL3_NewFrame();

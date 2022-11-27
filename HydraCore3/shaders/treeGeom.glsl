@@ -3,7 +3,7 @@
 layout(lines) in;
 layout(triangle_strip, max_vertices = 8) out;
 
-//out vec4 in_color;
+out vec4 in_color;
 
 uniform mat4 M, V, P;
 
@@ -35,7 +35,7 @@ void main() {
 	if (flag1 == -1) {
 		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
 
-		//in_color = vec4(0.f, 0.f, 0.f, 0.f);
+		in_color = vec4(0.f, 0.f, 0.f, 0.f);
 	}
 	if (flag1 == 0 || flag1 == 1) {
 		plane = gl_in[1 - flag1].gl_Position[flag2];
@@ -46,7 +46,7 @@ void main() {
 		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
 
 		vec4 colors[2] = { vec4(0.f, 0.8f, 0.8f, 1.f), vec4(0.f, 0.f, 0.8f, 1.f) };
-		//in_color = colors[flag1];
+		in_color = colors[flag1];
 	}
 	if (flag1 == 2) {
 		axes = uvec3(flag2, (flag2 + 1) % 3, (flag2 + 2) % 3);
@@ -56,7 +56,7 @@ void main() {
 		build_rectangle(gl_in[0].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
 		build_rectangle(gl_in[1].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
 
-		//in_color = vec4(0.8f, 0.f, 0.f, 1.f);
+		in_color = vec4(0.8f, 0.f, 0.f, 1.f);
 	}
 	if (flag1 == 3) {
 		uvec2 plane_ind = uvec2(flag2 >> 4, (flag2 >> 2) & 3);
@@ -71,7 +71,7 @@ void main() {
 			build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
 		}
 
-		//in_color = vec4(0.8f, 0.3f, 0.f, 1.f);
+		in_color = vec4(0.8f, 0.3f, 0.f, 1.f);
 	}
 }
 

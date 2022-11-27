@@ -578,7 +578,7 @@ unsigned DSTree::buildCarvingNodes(simpleAABB& parent_aabb, simpleAABB& child_aa
 			planes[0] = child[plane1];
 			bool norm_pos1 = plane1 > 2u;
 			if (norm_pos1) plane1 -= 3u;
-			
+
 			unsigned plane2 = sortInd[i];
 			if (plane2 >= 6u) plane2 -= 6u;
 			planes[1] = child[plane2];
@@ -736,7 +736,7 @@ void DSTree::CommitScene(BuildQuality a_qualityLevel) {
 	for (unsigned i = 0u; i < instances.size(); ++i) {
 		dst_vis.addInstance(instances_info[i].geomID, instances_info[i].transf.m_col[0].M);
 	}
-
+	dst_vis.addTree(&tree_info, &layers_info);
 	dst_vis.start();
 	return;
 }
@@ -1280,6 +1280,8 @@ void DSTree::treeVisInfo() {
 
 	std::vector <float> tmp;
 	tree_info.push_back(tmp);
+	std::vector <unsigned> tmpi = { 0 };
+	layers_info.push_back(tmpi);
 
 	if (AABB_diags.size() == 1 && AABB_diags[0].size() == 0)
 		AABB_diags[0].insert(AABB_diags[0].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
@@ -1287,6 +1289,7 @@ void DSTree::treeVisInfo() {
 
 	for (std::vector <std::vector <float>>::iterator layer = AABB_diags.begin(); layer < AABB_diags.end(); ++layer) {
 		tree_info.back().insert(tree_info.back().end(), layer->begin(), layer->end());
+		layers_info.back().push_back(tree_info.back().size());
 	}
 }
 
