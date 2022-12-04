@@ -253,7 +253,7 @@ void Integrator::CastSingleRayBlock(uint tid, uint* out_color, uint a_passNum)
 {
   auto start = std::chrono::high_resolution_clock::now();
 
-  #pragma omp parallel for default(shared)
+  //#pragma omp parallel for default(shared)
   for(long i=0;i<tid;i++)
     CastSingleRay(i, out_color);
 

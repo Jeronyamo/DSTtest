@@ -361,9 +361,15 @@ void Visualizer::start() {
 	ImGUI_initialization();
 	ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 	unsigned num_meshes = instances.size();
+
 	bool *active_meshes = new bool[num_meshes];
-	for (unsigned i = 0u; i < num_meshes; ++i)
+	int* tree_intervals = new int[num_meshes * 2u];
+	for (unsigned i = 0u; i < num_meshes; ++i) {
 		active_meshes[i] = false;
+		tree_intervals[i] = 0;
+	}
+	for (unsigned i = num_meshes; i < 2 * num_meshes; ++i)
+		tree_intervals[i] = 0;
 
 	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 
@@ -405,10 +411,26 @@ void Visualizer::start() {
 					glBindBuffer(GL_ARRAY_BUFFER, tmp.VBO);
 					glVertexAttribPointer(0, 4,	GL_FLOAT, GL_FALSE,	4 * sizeof(float), nullptr);
 
-					for (unsigned j = 0u; j < tmp.layers_indices->size() - 1; ++j) {
-						glDrawArrays(GL_LINES, tmp.layers_indices->at(j), (tmp.layers_indices->at(j + 1) - tmp.layers_indices->at(j)) >> 2);
-					}
+					int minlayer = tree_intervals[2u * i];
+					if (minlayer < 0)
+						minlayer = 0;
+					else if (minlayer > tmp.layers_indices->size() - 2)
+						minlayer = tmp.layers_indices->size() - 2;
 
+					int maxlayer = tree_intervals[2u * i + 1u];
+					if (maxlayer < 0)
+						maxlayer = 0;
+					else if (maxlayer > tmp.layers_indices->size() - 1)
+						maxlayer = tmp.layers_indices->size() - 1;
+
+					if (minlayer >= maxlayer)
+						maxlayer = minlayer + 1;
+
+
+					glDrawArrays(GL_LINES, tmp.layers_indices->at(minlayer) >> 2, ((tmp.layers_indices->at(maxlayer) - tmp.layers_indices->at(minlayer)) >> 2));
+
+					tree_intervals[2u * i] = minlayer;
+					tree_intervals[2u * i + 1u] = maxlayer;
 					glBindVertexArray(0);
 				}
 			}
@@ -429,6 +451,8 @@ void Visualizer::start() {
 			for (unsigned i = 0u; i < num_meshes; ++i) {
 				if (ImGui::Selectable((std::string("   ") + std::to_string(i) + std::string("   ")).c_str(), active_meshes[i], 0, ImVec2(55, 30)))
 					active_meshes[i] = !active_meshes[i];
+				if (active_meshes[i])
+					ImGui::InputInt2("Layers", &(tree_intervals[2u * i]));
 			}
 
 			ImGui::SameLine();
@@ -442,6 +466,7 @@ void Visualizer::start() {
 	}
 
 	delete[] active_meshes;
+	delete[] tree_intervals;
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();

@@ -809,43 +809,31 @@ CRT_Hit DSTree::traceTriangle(LiteMath::float3 Position, LiteMath::float3 Direct
 	}
 	return tempHitInfo;
 }
-						/*
-						unsigned glob_trigs = 0, glob_nodes = 0, glob2_trigs = 0u, glob2_nodes = 0u;
-						unsigned buf_nodes = 0, buf_trigs = 0, pixel = 1;
-						*/
+
+double glob_nodes = 0, glob_leaves = 0, glob_trigs = 0;
+unsigned buf_nodes = 0, buf_leaves = 0, buf_trigs = 0, pixel = 0;
+
 CRT_Hit DSTree::RayQuery_NearestHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar) {
 	uint32_t *insts = new uint32_t[instances_info.size()];
 	uint32_t num_insts = findInstHit(posAndNear, dirAndFar, insts);
 
 	CRT_Hit temp_hit{ FLT_MAX, static_cast<unsigned>(-1), static_cast<unsigned>(-1), static_cast<unsigned>(-1), {0.f} };
-						//buf_nodes = 0, buf_trigs = 0;
+	buf_nodes = 0, buf_leaves = 0, buf_trigs = 0;
 	for (uint32_t i = 0u; i < num_insts; ++i) {
-		//current_instance = insts[i];
-		//if (dirAndFar.w > temp_hit.t) dirAndFar.w = temp_hit.t;
 		CRT_Hit instHit = findHit(posAndNear, dirAndFar, false, insts[i], temp_hit.t);
-		//temp_hit.coords[2] += instHit.coords[2];
-		//temp_hit.coords[3] += instHit.coords[3];
-		//instHit.coords[2] = temp_hit.coords[2];
-		//instHit.coords[3] = temp_hit.coords[3];
+
 		if (instHit.t < temp_hit.t)
 			temp_hit = instHit;
 	}
-						/*
-						if (buf_nodes > glob_nodes) {
-							glob_nodes = buf_nodes;
-							glob_trigs = buf_trigs;
-						}
-						if (buf_trigs > glob2_trigs) {
-							glob2_nodes = buf_nodes;
-							glob2_trigs = buf_trigs;
-						}
-						
-						pixel += 1;
-						if (pixel == 128 * 128) {
-							std::cout << "Total1: " << glob_nodes << ", " << glob_trigs << std::endl;
-							std::cout << "Total2: " << glob2_nodes << ", " << glob2_trigs << std::endl;
-						}
-						*/
+	glob_nodes = glob_nodes * (pixel / (pixel + 1.)) + buf_nodes / (pixel + 1.);
+	glob_leaves = glob_leaves * (pixel / (pixel + 1.)) + buf_leaves / (pixel + 1.);
+	glob_trigs = glob_trigs * (pixel / (pixel + 1.)) + buf_trigs / (pixel + 1.);
+	pixel += 1u;
+	if (pixel == 1024 * 1024) {
+		std::cout << "Mean nodes: " << glob_nodes << ", Mean leaves: " << glob_leaves << ", Mean triangles: " << glob_trigs << "\n" << std::endl;
+		std::cout << "Mesh trees size: " << lower_tree.size() * sizeof(DSNode) << " B  ~  " << double(lower_tree.size() * sizeof(DSNode)) / 1024. << " KB" << std::endl;
+		std::cout << "Upper tree size: " << upper_tree.size() * sizeof(DSNode) << " B  ~  " << double(upper_tree.size() * sizeof(DSNode)) / 1024. << " KB" << std::endl;
+	}
 	delete[] insts;
 	return temp_hit;
 }
@@ -1028,7 +1016,7 @@ uint32_t DSTree::findInstHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAn
 CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar, bool findAny, uint32_t current_instance, float triang_t) {
 	simpleInstance tempInst = instances_info[current_instance];
 	simpleMeshInfo tempMesh = meshes[tempInst.geomID];
-								//unsigned count_nodes = 0u, count_trigs = 0u;
+	unsigned count_nodes = 0u, count_leaves = 0u, count_trigs = 0u;
 	LiteMath::float3 position = tempInst.transfInv * LiteMath::float3(posAndNear.x, posAndNear.y, posAndNear.z);
 	LiteMath::float4 temp_direction = LiteMath::mul4x4x4(tempInst.transfInv, LiteMath::float4(dirAndFar.x, dirAndFar.y, dirAndFar.z, 0.f));
 	LiteMath::float3 direction{ temp_direction.x, temp_direction.y, temp_direction.z };
@@ -1076,7 +1064,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 				if (isFin[planes.x]) t[0] = invDir[planes.x] * (curr_node.planes[0u] - position[planes.x]);
 				if (isFin[planes.y]) t[1] = invDir[planes.y] * (curr_node.planes[1u] - position[planes.y]);
-								//count_nodes += 1;
+				count_nodes += 1;
 				if (!IS_CARVING_NODE) {
 					bool is_min_left = direction[planes.x] < 0.f;
 					travStack t_info[2] = { travInfo, travInfo };
@@ -1168,7 +1156,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 
 		if (CHECK_LEAF_POLY) {
 			unsigned max_node_tr_index = DSTREE_MAX_POLY;
-
+			count_leaves += 1u;
 			if (!IS_CARVING_NODE) {
 				max_node_tr_index = static_cast<unsigned>(curr_node.planes[0]);
 				travInfo.node = 0u;
@@ -1183,7 +1171,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 			if (max_node_tr_index > tree_tr_num) max_node_tr_index = tree_tr_num;
 
 			for (unsigned j = curr_node.leftChild; j < max_node_tr_index; ++j) {
-								//count_trigs += 1;
+				count_trigs += 1;
 				CRT_Hit temp_t = traceTriangle(position, direction, tempVertices, &(tempIndices[3 * tempIndicesSorted[j]]));
 				if (temp_t.t < temp_hit.t && temp_t.t >= 0.f) {
 					temp_hit = temp_t;
@@ -1196,7 +1184,7 @@ CRT_Hit DSTree::findHit(LiteMath::float4 posAndNear, LiteMath::float4 dirAndFar,
 		}
 
 	} while (travInfo.node);
-								//buf_nodes += count_nodes, buf_trigs += count_trigs;
+	buf_nodes += count_nodes, buf_trigs += count_trigs, buf_leaves += count_leaves;
 	return temp_hit;
 }
 
@@ -1243,7 +1231,6 @@ void DSTree::treeVisInfo() {
 			curr_diag[7] = info[node].p1axis;
 			AABB_diags[depth].insert(AABB_diags[depth].end(), { curr_diag[0], curr_diag[1], curr_diag[2], curr_diag[3],
 																curr_diag[4], curr_diag[5], curr_diag[6], curr_diag[7] });
-
 			new_diag[3] = 1.f;
 			new_diag[info[node].p2axis] = info[node].p2;
 			new_diag[7] = info[node].p2axis;
@@ -1289,7 +1276,8 @@ void DSTree::treeVisInfo() {
 
 	for (std::vector <std::vector <float>>::iterator layer = AABB_diags.begin(); layer < AABB_diags.end(); ++layer) {
 		tree_info.back().insert(tree_info.back().end(), layer->begin(), layer->end());
-		layers_info.back().push_back(tree_info.back().size());
+		if (layers_info.back().back() != tree_info.back().size())
+			layers_info.back().push_back(tree_info.back().size());
 	}
 }
 

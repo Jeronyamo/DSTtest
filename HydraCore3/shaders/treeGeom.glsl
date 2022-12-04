@@ -25,58 +25,8 @@ void build_rectangle(float plane, vec2 axis1_minmax, vec2 axis2_minmax, uvec3 ax
 }
 
 
-void main() {
-	int flag1 = int(gl_in[0].gl_Position.w), flag2 = int(gl_in[1].gl_Position.w);
-	float plane = gl_in[0].gl_Position[0];
-	uvec3 axes = uvec3(0, 1, 2);
-	vec2 axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
-	vec2 axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
-
-	if (flag1 == -1) {
-		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
-
-		in_color = vec4(0.f, 0.f, 0.f, 0.f);
-	}
-	if (flag1 == 0 || flag1 == 1) {
-		plane = gl_in[1 - flag1].gl_Position[flag2];
-		axes = uvec3(flag2, (flag2 + 1) % 3, (flag2 + 2) % 3);
-		axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
-		axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
-
-		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
-
-		vec4 colors[2] = { vec4(0.f, 0.8f, 0.8f, 1.f), vec4(0.f, 0.f, 0.8f, 1.f) };
-		in_color = colors[flag1];
-	}
-	if (flag1 == 2) {
-		axes = uvec3(flag2, (flag2 + 1) % 3, (flag2 + 2) % 3);
-		axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
-		axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
-
-		build_rectangle(gl_in[0].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
-		build_rectangle(gl_in[1].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
-
-		in_color = vec4(0.8f, 0.f, 0.f, 1.f);
-	}
-	if (flag1 == 3) {
-		uvec2 plane_ind = uvec2(flag2 >> 4, (flag2 >> 2) & 3);
-		uvec2 is_max = uvec2((flag2 >> 1) & 1, flag2 & 1);
-
-		for (uint i = 0u; i < 2u; ++i) {
-			plane = gl_in[is_max[i]].gl_Position[plane_ind[i]];
-			axes = uvec3(plane_ind[i], (plane_ind[i] + 1) % 3, (plane_ind[i] + 2) % 3);
-			axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
-			axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
-
-			build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
-		}
-
-		in_color = vec4(0.8f, 0.3f, 0.f, 1.f);
-	}
-}
-
 /*
-	* flag1 =-1 -- one-noded tree, don't know what to do
+	* flag1 =-1 -- one-noded tree, just skip those (draw with alpha = 0)
 	* flag1 = 0 -- split node first
 			flag2 = plane (max)
 			in_color = vec4(0.f, 0.8f, 0.8f, 1.f);
@@ -100,3 +50,53 @@ void main() {
 			in_color = vec4(0.8f, 0.3f, 0.f, 1.f);
 		-> 2 planes
 */
+
+void main() {
+	int flag1 = int(gl_in[0].gl_Position.w), flag2 = int(gl_in[1].gl_Position.w);
+	float plane = gl_in[0].gl_Position[0];
+	uvec3 axes = uvec3(0, 1, 2);
+	vec2 axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
+	vec2 axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
+	in_color = vec4(1.f, 1.f, 1.f, 1.f);
+	if (flag1 == -1) {
+		in_color = vec4(0.f, 0.f, 0.f, 0.f);
+		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
+	}
+	if (flag1 == 0 || flag1 == 1) {
+		plane = gl_in[1 - flag1].gl_Position[flag2];
+		axes = uvec3(flag2, (flag2 + 1) % 3, (flag2 + 2) % 3);
+		axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
+		axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
+
+		vec4 colors[2] = { vec4(0.f, 1.f, 1.f, 1.f), vec4(0.f, 0.f, 1.f, 1.f) };
+		in_color = colors[flag1];
+
+		build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
+	}
+	if (flag1 == 2) {
+		axes = uvec3(flag2, (flag2 + 1) % 3, (flag2 + 2) % 3);
+		axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
+		axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
+
+		in_color = vec4(1.f, 0.3f, 0.f, 1.f);
+
+		build_rectangle(gl_in[0].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
+		build_rectangle(gl_in[1].gl_Position[flag2], axis1_minmax, axis2_minmax, axes);
+
+	}
+	if (flag1 == 3) {
+		uvec2 plane_ind = uvec2(flag2 >> 4, (flag2 >> 2) & 3);
+		uvec2 is_max = uvec2((flag2 >> 1) & 1, flag2 & 1);
+
+		in_color = vec4(1.f, 1.f, 0.f, 1.f);
+
+		for (uint i = 0u; i < 2u; ++i) {
+			plane = gl_in[is_max[i]].gl_Position[plane_ind[i]];
+			axes = uvec3(plane_ind[i], (plane_ind[i] + 1) % 3, (plane_ind[i] + 2) % 3);
+			axis1_minmax = vec2(gl_in[0].gl_Position[axes.y], gl_in[1].gl_Position[axes.y]);
+			axis2_minmax = vec2(gl_in[0].gl_Position[axes.z], gl_in[1].gl_Position[axes.z]);
+
+			build_rectangle(plane, axis1_minmax, axis2_minmax, axes);
+		}
+	}
+}
